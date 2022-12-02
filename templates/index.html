@@ -2,9 +2,100 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link href="{{ url_for('static', filename='styles/reset.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet">
+    <title>개발 is in</title>
 </head>
 <body>
+<header>
+    <img id="logo" src="{{ url_for('static', filename='images/개발isin.png') }}">
+    <nav>
+        <a href="">로그인/회원가입</a>
+    </nav>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <div class="column">
+                {% include "components/category.html" %}
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="column">
+                <p>랜덤 프로필</p>
+                {% include "components/random_profile.html" %}
+                <div style="display: flex; justify-content: space-between;">
+                    <p>전체 게시글</p>
+                    <nav>
+                        <a href="">글쓰기</a>
+                    </nav>
+                </div>
+                <div class="card">
+                    <blockquote class="blockquote mb-0">
+                        <img alt="이미지가 없습니다" class="img-fluid rounded-start"
+                             src="{{ url_for('static', filename='images/default_image.png') }}"
+                             style="height: 40px;">
+                        <span>${name}</span>
+                        <span style="text-align: right; font-size: 12px">(${time})</span>
+                    </blockquote>
+                </div>
+                <div class="card" style="margin-bottom: 10px;">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0" style="height: 120px;">
+                            <span>${comment}</span>
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="card">
+                    <blockquote class="blockquote mb-0">
+                        <img alt="이미지가 없습니다" class="img-fluid rounded-start"
+                             src="{{ url_for('static', filename='images/default_image.png') }}"
+                             style="height: 40px;">
+                        <span>${name}</span>
+                        <span style="text-align: right; font-size: 12px">(${time})</span>
+                    </blockquote>
+                </div>
+                <div class="card" style="margin-bottom: 10px;">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0" style="height: 120px;">
+                            <span>${comment}</span>
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="card">
+                    <blockquote class="blockquote mb-0">
+                        <img alt="이미지가 없습니다" class="img-fluid rounded-start"
+                             src="{{ url_for('static', filename='images/default_image.png') }}"
+                             style="height: 40px;">
+                        <span>${name}</span>
+                        <span style="text-align: right; font-size: 12px">(${time})</span>
+                    </blockquote>
+                </div>
+                <div class="card" style="margin-bottom: 10px;">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0" style="height: 120px;">
+                            <span>${comment}</span>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="column">
+                {% include "components/my_profile.html" %}
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
