@@ -6,10 +6,14 @@ app = Flask(__name__)
 def home():
     return render_template('login.html')
 
-# @app.route('/api/user/post', methods=['POST'])
+@app.route('/post')
+def home():
+    return render_template('post.html')
+
+# @app.route('/user/login', methods=['POST'])
 # def save_user():
 
-#     # userName = {'name': request.form['name']}
+#     userName = {'name': request.form['name']}
 
 #     userName = request.form['name']
 
