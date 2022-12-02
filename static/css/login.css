@@ -11,20 +11,23 @@ body {
 
 .inner {
   position: relative;
+  width: 100%;
+  /* align-items: center; */
 }
 
 .logo {
-  padding: 0px 1100px 0px 0px;
-  /* margin: auto; */
+  /* padding: 0px 60% 0px 0px; */
+  margin: 0px 60% 0px 0px;
   margin-bottom:20px;
   height: 50px;
 }
 
 .lgbutton {
   text-align: center;
-  margin: auto;
-  width: 120px;
-  height: 70px;
+  /* padding-right: 3.5%; */
+  margin: 0px 0px 0px 7%;
+  width: 12%;
+  height: 80px;
   font-size: 20px;
 }
 
@@ -43,8 +46,8 @@ header .inner {
 }
 
 header .loginbutton {
-  display: flex;
-  justify-content: right;
+  height: 65px;
+  width: 100px;
 }
 
 
@@ -52,7 +55,6 @@ header .loginbutton {
 .loginbutton {
   border: 3px solid #4285f4;
   color: #6e6e6e;
-  width: 100%;
   border-radius: 20px;
   float: right;
 }
