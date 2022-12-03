@@ -3,11 +3,11 @@ from sqlalchemy import create_engine, text
 app = Flask(__name__)
 
 @app.route('/login')
-def home():
+def login():
     return render_template('login.html')
 
 @app.route('/post')
-def home():
+def post():
     return render_template('post.html')
 
 # @app.route('/user/login', methods=['POST'])
