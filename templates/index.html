@@ -12,6 +12,8 @@
 
     <link href="{{ url_for('static', filename='styles/reset.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+
     <title>개발 is in</title>
 </head>
 <body>
@@ -28,70 +30,56 @@
             <div class="column">
                 {% include "components/category.html" %}
             </div>
+            <div class="column" style="margin-top: 20px;">
+                {% include "components/my_profile.html" %}
+            </div>
         </div>
-        <div class="col-8">
+        <div class="col-10">
             <div class="column">
-                <p>랜덤 프로필</p>
+                <p style="height: 30px;">랜덤 프로필</p>
                 {% include "components/random_profile.html" %}
-                <div style="display: flex; justify-content: space-between;">
+                <div class="small_title" style="display: flex; justify-content: space-between; height: 30px;">
                     <p>전체 게시글</p>
                     <nav>
                         <a href="">글쓰기</a>
                     </nav>
                 </div>
-                <div class="card">
-                    <blockquote class="blockquote mb-0">
+                <div id="board-list">
+                    <div style="display: flex; align-items: center;">
                         <img alt="이미지가 없습니다" class="img-fluid rounded-start"
-                             src="{{ url_for('static', filename='images/default_image.png') }}"
+                             src="/static/images/default_image.png"
                              style="height: 40px;">
-                        <span>${name}</span>
-                        <span style="text-align: right; font-size: 12px">(${time})</span>
-                    </blockquote>
-                </div>
-                <div class="card" style="margin-bottom: 10px;">
-                    <div class="card-body">
-                        <blockquote class="blockquote mb-0" style="height: 120px;">
-                            <span>${comment}</span>
-                        </blockquote>
+                        <span>{user_name}</span>
+                    </div>
+                    <div class="card" style="margin-bottom: 10px;">
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0" style="height: 120px;">
+                                <div style="margin-bottom: 10px;">
+                                    <span>${name}</span>
+                                    <span style="text-align: right; font-size: 12px">(${time})</span>
+                                </div>
+                                <span>${content}</span>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <img alt="이미지가 없습니다" class="img-fluid rounded-start"
+                             src="/static/images/default_image.png"
+                             style="height: 40px;">
+                        <span>{user_name}</span>
+                    </div>
+                    <div class="card" style="margin-bottom: 10px;">
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0" style="height: 120px;">
+                                <div style="margin-bottom: 10px;">
+                                    <span>${name}</span>
+                                    <span style="text-align: right; font-size: 12px">(${time})</span>
+                                </div>
+                                <span>${content}</span>
+                            </blockquote>
+                        </div>
                     </div>
                 </div>
-                <div class="card">
-                    <blockquote class="blockquote mb-0">
-                        <img alt="이미지가 없습니다" class="img-fluid rounded-start"
-                             src="{{ url_for('static', filename='images/default_image.png') }}"
-                             style="height: 40px;">
-                        <span>${name}</span>
-                        <span style="text-align: right; font-size: 12px">(${time})</span>
-                    </blockquote>
-                </div>
-                <div class="card" style="margin-bottom: 10px;">
-                    <div class="card-body">
-                        <blockquote class="blockquote mb-0" style="height: 120px;">
-                            <span>${comment}</span>
-                        </blockquote>
-                    </div>
-                </div>
-                <div class="card">
-                    <blockquote class="blockquote mb-0">
-                        <img alt="이미지가 없습니다" class="img-fluid rounded-start"
-                             src="{{ url_for('static', filename='images/default_image.png') }}"
-                             style="height: 40px;">
-                        <span>${name}</span>
-                        <span style="text-align: right; font-size: 12px">(${time})</span>
-                    </blockquote>
-                </div>
-                <div class="card" style="margin-bottom: 10px;">
-                    <div class="card-body">
-                        <blockquote class="blockquote mb-0" style="height: 120px;">
-                            <span>${comment}</span>
-                        </blockquote>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-2">
-            <div class="column">
-                {% include "components/my_profile.html" %}
             </div>
         </div>
     </div>

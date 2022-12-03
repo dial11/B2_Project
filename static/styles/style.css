@@ -12,17 +12,15 @@ header img {
     height: 40px;
 }
 
-header a {
+header a, .small_title a {
     border-radius: 5px;
     background: #fff0d9;
     box-shadow: 0 2px 3px 0 rgb(0 0 0 / 15%);
     padding: 7px;
-    margin-right: 1rem;
 }
 
-
 .column {
-    height: 800px;
+    /*height: 800px;*/
     padding: 20px;
     background-color: #ffffff;
     border-radius: 16px;
@@ -31,7 +29,7 @@ header a {
 
 #category {
     text-align: left;
-    height: 400px;
+    /*height: 400px;*/
 }
 
 #category li {
@@ -39,12 +37,11 @@ header a {
 }
 
 #myProfile {
-    height: 400px;
+    /*height: 400px;*/
 }
 
 #myProfile .card-img-top {
-    width: 150px;
-    height: 150px;
+    max-width: 150px;
     margin: auto;
 }
 .card {
