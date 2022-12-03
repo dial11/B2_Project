@@ -26,9 +26,8 @@
         href="https://fonts.googleapis.com/css2?family=Dokdo&family=Gaegu:wght@300;400;700&family=Gamja+Flower&display=swap"
         rel="stylesheet">
 
-    <title>개발구조 팀 페이지</title>
+    <title>개발 is in</title>
     <link rel="icon" href="../static/img/icon.png" />
-    <link rel="stylesheet" href="../static/css/submit.css" />
 
     <style>
 
@@ -36,18 +35,18 @@
 
 
     <script>
-        function save_user() {
-            let userName = $('#user-name').val();
-            $.ajax({
-                type: 'POST',
-                url: '/api/user/post',
-                data: { name: userName },
-                success: function (response) {
-                    alert(response['msg']);
-                    window.location.reload();
-                }
-            });
-        }
+        // function save_user() {
+        //     let userName = $('#user-name').val();
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: '/api/user/post',
+        //         data: { name: userName },
+        //         success: function (response) {
+        //             alert(response['msg']);
+        //             window.location.reload();
+        //         }
+        //     });
+        // }
     </script>
 
 </head>
@@ -57,34 +56,52 @@
         <div class="inner">
             <div class="logo">
                 <a href="/">
-                    <img class="logo-image" src="../static/image/개발isin.png" alt="타이틀로고" />
+                    <img class="logo-image" src="../static/image/개발isinhalf.png" alt="타이틀로고"/>
                 </a>
             </div>
             <div class="title">
 
             </div>
-            <div>
-                <a href="./login">
-                    <img class="menu-image-right" src="../static/image/가입신청.png" alt="가입신청" />
-                </a>
+            <div class="lgbutton">
+                <button class="loginbutton" type="button">
+                    가입신청<br>로그인
+                </button>
             </div>
         </div>
     </header>
 
-    
-
-    <footer>
-        <div class="inner">
-            <div class="info">
-                <span>제작자 : </span>
-                <span>변준혁</span>
-                <span>장빈</span>
-                <span>정지우</span>
-                <span>조병준</span>
-                <span>천준기</span>
-            </div>
+   <!---------------------------- Form----------------------------------------------------->
+<div class="form">
+    <div class="form-toggle"></div>
+    <div class="form-panel one">
+        <div class="form-header">
+            <h1>Account Login</h1>
         </div>
-    </footer>
+        <div class="form-content">
+            <form>
+                <div class="form-group"><label for="userid">Userid</label><input type="text" id="userid" name="userid" required="required" /></div>
+                <div class="form-group"><label for="password">Password</label><input type="password" id="password" name="password" required="required" /></div>
+                <div class="form-group"><label class="form-remember"><input type="checkbox" />Remember Me</label><a class="form-recovery" href="#">Forgot Password?</a></div>
+                <div class="form-group"><button type="submit">Log In</button></div>
+            </form>
+        </div>
+    </div>
+    <div class="form-panel two">
+        <div class="form-header">
+            <h1>Register Account</h1>
+        </div>
+        <div class="form-content">
+            <form>
+                <div class="form-group"><label for="userid">Userid</label><input type="text" id="userid" name="userid" required="required" /></div>
+                <div class="form-group"><label for="password">Password</label><input type="password" id="password" name="password" required="required" /></div>
+                <div class="form-group"><label for="username">Username</label><input type="text" id="username" name="username" required="required" /></div>
+                <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" required="required" /></div>
+                <div class="form-group"><button type="submit">Register</button></div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 
 </html>
