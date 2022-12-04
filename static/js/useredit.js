@@ -1,6 +1,8 @@
 $(document).ready(function () {
     get_user();
 });
+
+// 유저 정보 불러오기
 function get_user() {
     $.ajax({
         type: "GET",
