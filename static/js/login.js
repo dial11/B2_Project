@@ -40,6 +40,11 @@ function save_user() {
   let userName = $("#username").val();
   let email = $("#email").val();
 
+  if (userId === "" || password === "" || userName === "" || email === "") {
+    alert("빈칸이 없도록 작성해주세요.");
+    return;
+  }
+
   $.ajax({
     type: "POST",
     url: "/user/register",
@@ -57,20 +62,25 @@ function save_user() {
 }
 
 // 로그인기능구현--------------------------------------------------------
-// function user_login() {
-//   let userId = $("#userid").val();
-//   let password = $("#password").val();
+function user_login() {
+  let userId = $("#userid").val();
+  let password = $("#password").val();
 
-//   $.ajax({
-//     type: "POST",
-//     url: "/user/login",
-//     data: {
-//       id: userId,
-//       password: password,
-//     },
-//     success: function (response) {
-//       alert(response["msg"]);
-//       window.location.reload();
-//     },
-//   });
-// }
+  // if (userId === ""||password ==="") {
+  //   alert("빈칸을 채워주세요")
+  //   return
+  // }
+
+  $.ajax({
+    type: "POST",
+    url: "/user/login",
+    data: {
+      id: userId,
+      password: password,
+    },
+    success: function (response) {
+      alert(response["msg"]);
+      window.location.href = "/index";
+    },
+  });
+}

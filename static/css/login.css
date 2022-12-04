@@ -22,7 +22,7 @@ body {
   height: 50px;
 }
 
-.lgbutton {
+.lg-button {
   text-align: center;
   /* padding-right: 3.5%; */
   margin: 0px 0px 0px 7%;
@@ -45,21 +45,21 @@ header .inner {
   align-items: center;
 }
 
-header .loginbutton {
+header .login-button {
   height: 65px;
   width: 100px;
 }
 
 
 
-.loginbutton {
+.login-button {
   border: 3px solid #4285f4;
   color: #6e6e6e;
   border-radius: 20px;
   float: right;
 }
 
-.loginbutton:hover { 
+.login-button:hover { 
   background-color: #4285f4;
   color: #e1eef6;
 }
