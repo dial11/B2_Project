@@ -1,6 +1,6 @@
 $(document).ready(function () {
     showRandomUser();
-    showBoard(1);
+    showBoard();
     showBackendBoard();
     showFrontendBoard();
 });
@@ -47,7 +47,7 @@ function showRandomUser() {
                                     <div class="row g-0">
                                         <div class="col-md-3">
                                             <img alt="이미지가 없습니다" class="img-fluid rounded-start" style="height: 70px;"
-                                                 src="/static/image/default_image.png">
+                                                 src="/static/images/default_image.png">
                                         </div>
                                         <div class="col-md-9">
                                             <div class="card-body">
@@ -64,11 +64,11 @@ function showRandomUser() {
     });
 }
 
-function showBoard(i) {
+function showBoard() {
     $('#all-board-list').empty()
     $.ajax({
         type: "GET",
-        url: `/board/${i}`,
+        url: "/board",
         data: {},
         success: function (response) {
             console.log('success_showBoard')
@@ -82,7 +82,7 @@ function showBoard(i) {
                                 <div>
                                     <div style="display: flex; align-items: center;">
                                             <img alt="이미지가 없습니다" class="img-fluid rounded-start"
-                                                 src="/static/image/default_image.png"
+                                                 src="/static/images/default_image.png"
                                                  style="height: 40px; margin-right: 10px;">
                                             <span>${user_name}</span> 
                                     </div>
@@ -125,7 +125,7 @@ function showBackendBoard() {
                                     <div>
                                         <div style="display: flex; align-items: center;">
                                                 <img alt="이미지가 없습니다" class="img-fluid rounded-start"
-                                                     src="/static/image/default_image.png"
+                                                     src="/static/images/default_image.png"
                                                      style="height: 40px; margin-right: 10px;">
                                                 <span>${user_name}</span> 
                                         </div>
@@ -169,7 +169,7 @@ function showFrontendBoard() {
                                     <div>
                                         <div style="display: flex; align-items: center;">
                                                 <img alt="이미지가 없습니다" class="img-fluid rounded-start"
-                                                     src="/static/image/default_image.png"
+                                                     src="/static/images/default_image.png"
                                                      style="height: 40px; margin-right: 10px;">
                                                 <span>${user_name}</span> 
                                         </div>
@@ -192,13 +192,3 @@ function showFrontendBoard() {
         }
     });
 }
-
-let page = 1;
-
-$(window).scroll(function() {
-    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-      console.log(page)
-      showBoard(++page)
-
-    }
-});
