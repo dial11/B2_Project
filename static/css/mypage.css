@@ -1,0 +1,64 @@
+@font-face {
+  font-family: "Single Day";
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/singleday/v15/LYjHdGDjlEgoAcF95EI5jV9tRtXRM_vAklfi4DzhOchwatn58A.0.woff2)
+      format("woff2");
+}
+
+* {
+  font-family: "Single Day", cursive;
+}
+
+.column {
+  min-width: 185px;
+}
+
+.my-profile-title {
+  margin-left: 40px;
+  padding-top: 1rem;
+  padding-bottom: 1.2rem;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.my-profile-button {
+  padding-right: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.my-profile-imgsub {
+  display: flex;
+  flex-direction: row;
+}
+
+/* .my-profile-description {
+  margin-top: -30px;
+} */
+
+
+.my-profile {
+  /* margin-left: 100px; */
+  min-width: 600px;
+  /* height: 100%; */
+  /* width: 600px; */
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px 0 rgb(0 0 0 / 15%);
+}
+
+.my-profile-sub {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+}
+
+.my-profile-img {
+  display: flex;
+  padding-top: 30px;
+  padding-left: 30px;
+}
+
