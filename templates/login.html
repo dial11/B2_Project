@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
     <!-- CSS 연결 -->
     <link rel="stylesheet" href="../static/css/login.css" />
 
@@ -20,88 +25,143 @@
     <script defer src="../static/js/login.js"></script>
 
     <!--폰트-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Dokdo&family=Gaegu:wght@300;400;700&family=Gamja+Flower&display=swap"
-        rel="stylesheet">
+      href="https://fonts.googleapis.com/css2?family=Dokdo&family=Gaegu:wght@300;400;700&family=Gamja+Flower&display=swap"
+      rel="stylesheet"
+    />
 
     <title>개발 is in</title>
     <link rel="icon" href="../static/img/icon.png" />
 
-    <style>
+  </head>
 
-    </style>
-
-
-    <script>
-        // function save_user() {
-        //     let userName = $('#user-name').val();
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: '/api/user/post',
-        //         data: { name: userName },
-        //         success: function (response) {
-        //             alert(response['msg']);
-        //             window.location.reload();
-        //         }
-        //     });
-        // }
-    </script>
-
-</head>
-
-<body>
+  <body>
     <header>
-        <div class="inner">
-            <div class="logo">
-                <a href="/">
-                    <img class="logo-image" src="../static/image/개발isinhalf.png" alt="타이틀로고"/>
-                </a>
-            </div>
-            <div class="title">
-
-            </div>
-            <div class="lgbutton">
-                <button class="loginbutton" type="button">
-                    가입신청<br>로그인
-                </button>
-            </div>
+      <div class="inner">
+        <div class="logo">
+          <a href="/">
+            <img
+              class="logo-image"
+              src="../static/image/개발isinhalf.png"
+              alt="타이틀로고"
+            />
+          </a>
         </div>
+        <div class="title"></div>
+        <div class="lg-button">
+          <button
+            class="login-button"
+            type="button"
+            onclick="location.href='/login' "
+          >
+            가입신청<br />로그인
+          </button>
+        </div>
+      </div>
     </header>
+    <!-- {{session['id']}} -->
 
-   <!-- Form-->
-<div class="form">
-    <div class="form-toggle"></div>
-    <div class="form-panel one">
+    <!---------------------------- Form----------------------------------------------------->
+    <div class="form">
+      <div class="form-toggle"></div>
+      <div class="form-panel one">
         <div class="form-header">
-            <h1>Account Login</h1>
+          <h1>Account Login</h1>
         </div>
         <div class="form-content">
-            <form>
-                <div class="form-group"><label for="userid">Userid</label><input type="text" id="userid" name="userid" required="required" /></div>
-                <div class="form-group"><label for="password">Password</label><input type="password" id="password" name="password" required="required" /></div>
-                <div class="form-group"><label class="form-remember"><input type="checkbox" />Remember Me</label><a class="form-recovery" href="#">Forgot Password?</a></div>
-                <div class="form-group"><button type="submit">Log In</button></div>
-            </form>
+          <form>
+            <div class="form-group">
+              <label for="userid">Userid</label
+              ><input
+                type="text"
+                id="userid"
+                name="userid"
+                required="required"
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label
+              ><input
+                type="password"
+                id="password"
+                name="password"
+                required="required"
+              />
+            </div>
+
+            <!-- <div class="form-group">
+              <label class="form-remember"
+                ><input type="checkbox" />Remember Me</label
+              >
+              <a class="form-recovery" href="#">Forgot Password?</a>
+            </div> -->
+            <div class="form-group">
+              <button type="button" onclick="user_login()">Log In</button>
+
+            </div>
+          </form>
         </div>
-    </div>
-    <div class="form-panel two">
+
+      </div>
+      <div class="form-panel two">
         <div class="form-header">
-            <h1>Register Account</h1>
+          <h1>Register Account</h1>
         </div>
         <div class="form-content">
-            <form>
-                <div class="form-group"><label for="userid">Userid</label><input type="text" id="userid" name="userid" required="required" /></div>
-                <div class="form-group"><label for="password">Password</label><input type="password" id="password" name="password" required="required" /></div>
-                <div class="form-group"><label for="username">Username</label><input type="text" id="username" name="username" required="required" /></div>
-                <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" required="required" /></div>
-                <div class="form-group"><button type="submit">Register</button></div>
-            </form>
+          <form>
+            <div class="form-group">
+              <label for="joinid">Userid</label
+              ><input
+                type="text"
+                id="joinid"
+                name="joinid"
+                required="required"
+              />
+              <!-- <button
+                type="button"
+                class="id_overlap_button"
+                onclick="id_overlap_check()"
+              >
+                check
+              </button>
+              <img id="id_check_sucess" style="display: none" /> -->
+            </div>
+            <div class="form-group">
+              <label for="joinpassword">Password</label
+              ><input
+                type="password"
+                id="joinpassword"
+                name="joinpassword"
+                required="required"
+              />
+            </div>
+            <div class="form-group">
+              <label for="username">Username</label
+              ><input
+                type="text"
+                id="username"
+                name="username"
+                required="required"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label
+              ><input
+                type="email"
+                id="email"
+                name="email"
+                required="required"
+              />
+            </div>
+            <div class="form-group">
+              <button type="button" onclick="save_user()">Register</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
-</div>
-
-</body>
-
+  </body>
 </html>
+

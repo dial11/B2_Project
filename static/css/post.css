@@ -5,6 +5,9 @@ body {
   font-family: 'Dokdo', cursive;
   font-family: 'Gaegu', cursive;
   font-family: 'Gamja Flower', cursive;
+
+  font-family: "Roboto", sans-serif;
+
   width: 80%;
   margin: auto;
 }
@@ -18,11 +21,13 @@ body {
 .logo {
   /* padding: 0px 60% 0px 0px; */
   margin: 0px 60% 0px 0px;
-  margin-bottom:20px;
+
+  margin-bottom: 20px;
   height: 50px;
 }
 
-.lgbutton {
+.lg-button {
+
   text-align: center;
   /* padding-right: 3.5%; */
   margin: 0px 0px 0px 7%;
@@ -39,27 +44,61 @@ header {
   width: 100%;
   padding-top: 10px;
 }
+
+
 header .inner {
   display: flex;
   justify-content: left;
   align-items: center;
 }
 
-header .loginbutton {
+
+header .login-button {
+
   height: 65px;
   width: 100px;
 }
 
 
 
-.loginbutton {
+
+.login-button {
   border: 3px solid #4285f4;
+  /* background-color: #; */
+
   color: #6e6e6e;
   border-radius: 20px;
   float: right;
 }
 
-.loginbutton:hover { 
+.login-button:hover {
   background-color: #4285f4;
   color: #e1eef6;
+}
+
+.post-boxs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image {
+  width: 50%;
+  height: 50%;
+}
+.post-user {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: right;
+
 }
