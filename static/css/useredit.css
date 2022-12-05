@@ -1,0 +1,59 @@
+@font-face {
+    font-family: "Single Day";
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/singleday/v15/LYjHdGDjlEgoAcF95EI5jV9tRtXRM_vAklfi4DzhOchwatn58A.0.woff2)
+        format("woff2");
+}
+
+* {
+    font-family: "Single Day", cursive;
+}
+
+body {
+    height: 100vh;
+    background-color: #f1f3f5;
+    margin: 0;
+    padding: 0;
+}
+
+.member-card-wrap {
+    width: 100%;
+    height: 100%;
+    min-height: 850px;
+    min-width: 335px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    padding: 1.5rem;
+}
+
+.member-card {
+    /* width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 25px;
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    transition: 1s; */
+
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 25px;
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    transition: 1s;
+}
+
