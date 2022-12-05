@@ -57,7 +57,8 @@
         <div class="post-user">
             <!-- 프로필사진도 db에 존재하면 변경, 로그인을 했을 경우 작성자의 닉네임 가져오기 -->
             <img class="profile-image" src="../static/image/baseprofile.png" alt="타이틀로고"/>
-            <p>작성자닉네임 : `정지우`</p>
+            <p>작성자닉네임 : {{session['name']}}</p>
+            <p>작성자이메일 : {{session['email']}}</p>
         </div>
         <div class="post-contents">
             <div class="mb-3">
@@ -84,7 +85,7 @@
                         <input type="file" class="form-control" id="inputGroupFile02">
                         <label class="input-group-text" for="inputGroupFile02">Upload</label>
                     </div>
-                    <div class="post-button"><button type="submit">동록하기</button></div>
+                    <div class="post-button"><button type="button">동록하기</button></div>
                 </form>
             </div>
 

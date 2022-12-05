@@ -25,7 +25,7 @@ db = pymysql.connect (
 curs = db.cursor()
 
 
-@app.route('/index')
+@app.route('/')
 def root():
     return render_template('index.html')
 
@@ -60,25 +60,31 @@ def save_user():
 def user_login():
     userId = request.form['id']
     password = request.form['password']
+    # userName = request.form['name']
 
-    sql = f'select id,password from user where user.id = {userId}'
+    sql = f'select id,password,name,email from user where user.id = {userId}'
 
     curs.execute(sql)
     result = curs.fetchone()
-    print(type(result[1]), type(password))
-    # return jsonify({'msg':'회원이 아닙니다.'})
+    # print(type(result), type(password))
+    # return result is None
 
     if result is None:
         # print('none')
         return jsonify({'msg':'회원이 아닙니다.'})
+
     else:
         if result[1] != password:
             # print('password')
             return jsonify({'msg':'비밀번호가 일치하지 않습니다.'})
 
         else:
-            sql = f'select id,name,email from user where user.id = {userId}' #나중수정
+            # sql = f'select id,name,email from user where user.id = {userId}' 
+            # #나중수정
+            print(result)
             session['id'] = userId
+            session['name'] = result[2]
+            session['email'] = result[3]
             return jsonify({'msg':'로그인 성공'})
         
    
