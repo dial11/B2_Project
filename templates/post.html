@@ -15,6 +15,8 @@
 
 
     <!-- CSS 연결 -->
+    <!-- <link href="{{ url_for('static', filename='css/reset.css') }}" rel="stylesheet"> -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/post.css" />
 
     <!-- javascript 연결 -->
@@ -34,28 +36,7 @@
 </head>
 
 <body>
-    <header>
-        <div class="inner">
-            <div class="logo">
-                <a href="/">
-
-                    <img class="logo-image" src="../static/image/개발isinhalf.png" alt="타이틀로고" />
-
-                </a>
-            </div>
-            <div class="title">
-
-            </div>
-
-            <div class="lg-button">
-                <button class="login-button" type="button" onclick="location.href='/login' ">
-                    가입신청<br>로그인
-
-                </button>
-            </div>
-        </div>
-    </header>
-
+    {% include "components/header.html" %}
     <div class="post-boxs">
         <div class="form-header">
             <h1>POST</h1>
@@ -68,11 +49,10 @@
         </div>
         <div class="post-contents">
             <div class="mb-3">
-                <select class="form-select" required aria-label="select example">
+                <select class="form-select" required aria-label="select example" id="selectPost">
                     <option value="">게시글 분야</option>
                     <option value="1">FE</option>
                     <option value="2">BE</option>
-                    <option value="3">ETC</option>
                 </select>
                 <div class="invalid-feedback">게시글의 분야를 선택하지않았습니다.</div>
             </div>
@@ -80,18 +60,18 @@
                 <form>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">제목</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1"
+                        <input type="text" class="form-control post-title" id="exampleFormControlInput1"
                             placeholder="제목을 입력해주세요.">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="내용을 입력해주세요."></textarea>
+                        <textarea class="form-control post-content" id="exampleFormControlTextarea1" rows="3" placeholder="내용을 입력해주세요."></textarea>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="file" class="form-control" id="inputGroupFile02">
+                        <input type="file" class="form-control post-file" id="inputGroupFile02">
                         <label class="input-group-text" for="inputGroupFile02">Upload</label>
                     </div>
-                    <div class="post-button"><button type="button">동록하기</button></div>
+                    <div class="post-button"><button type="button" onclick="post_board()">동록하기</button></div>
                 </form>
             </div>
 
