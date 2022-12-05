@@ -17,22 +17,18 @@
     <title>개발 is in</title>
 </head>
 <body>
-<header>
-    <img id="logo" src="{{ url_for('static', filename='image/개발isin.png') }}">
-    <nav>
-        <a href="">로그인/회원가입</a>
-    </nav>
-</header>
-
+{% include "components/header.html" %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-2">
             <div class="column">
                 {% include "components/category.html" %}
             </div>
+            {% if session['id'] %}
             <div class="column" style="margin-top: 20px;">
                 {% include "components/my_profile.html" %}
             </div>
+            {% endif %}
         </div>
         <div class="col-10">
             <div class="column">
@@ -52,6 +48,11 @@
                 {% else %}
                 {% include "components/category_all.html" %}
                 {% endif %}
+                <!--                <div class="d-flex justify-content-center">-->
+                <!--                    <div class="spinner-border" role="status" id="loading icon">-->
+                <!--                        <span class="visually-hidden">Loading...</span>-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </div>
         </div>
     </div>

@@ -1,0 +1,11 @@
+<header>
+    <img id="logo" src="{{ url_for('static', filename='image/개발isin.png') }}">
+    <nav>
+        {% if session['id'] %}
+        <a href="{{url_for('logout')}}">로그아웃</a>
+        {% else %}
+        <a href="{{url_for('login')}}">로그인/회원가입</a>
+        {% endif %}
+    </nav>
+</header>
+
