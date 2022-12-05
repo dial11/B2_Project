@@ -20,6 +20,14 @@
 
     <!-- CSS 연결 -->
     <link rel="stylesheet" href="../static/css/login.css" />
+    <link
+      href="{{ url_for('static', filename='css/reset.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='css/style.css') }}"
+      rel="stylesheet"
+    />
 
     <!-- javascript 연결 -->
     <script defer src="../static/js/login.js"></script>
@@ -34,34 +42,10 @@
 
     <title>개발 is in</title>
     <link rel="icon" href="../static/img/icon.png" />
-
   </head>
 
   <body>
-    <header>
-      <div class="inner">
-        <div class="logo">
-          <a href="/">
-            <img
-              class="logo-image"
-              src="../static/image/개발isinhalf.png"
-              alt="타이틀로고"
-            />
-          </a>
-        </div>
-        <div class="title"></div>
-        <div class="lg-button">
-          <button
-            class="login-button"
-            type="button"
-            onclick="location.href='/login' "
-          >
-            가입신청<br />로그인
-          </button>
-        </div>
-      </div>
-    </header>
-    <!-- {{session['id']}} -->
+    {% include "components/header.html" %}
 
     <!---------------------------- Form----------------------------------------------------->
     <div class="form">
@@ -99,11 +83,9 @@
             </div> -->
             <div class="form-group">
               <button type="button" onclick="user_login()">Log In</button>
-
             </div>
           </form>
         </div>
-
       </div>
       <div class="form-panel two">
         <div class="form-header">
@@ -164,4 +146,3 @@
     </div>
   </body>
 </html>
-
