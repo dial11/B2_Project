@@ -1,0 +1,104 @@
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
+
+/* 직접 */
+body {
+  font-family: 'Dokdo', cursive;
+  font-family: 'Gaegu', cursive;
+  font-family: 'Gamja Flower', cursive;
+
+  font-family: "Roboto", sans-serif;
+
+  width: 80%;
+  margin: auto;
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  /* align-items: center; */
+}
+
+.logo {
+  /* padding: 0px 60% 0px 0px; */
+  margin: 0px 60% 0px 0px;
+
+  margin-bottom: 20px;
+  height: 50px;
+}
+
+.lg-button {
+
+  text-align: center;
+  /* padding-right: 3.5%; */
+  margin: 0px 0px 0px 7%;
+  width: 12%;
+  height: 80px;
+  font-size: 20px;
+}
+
+header {
+  /* background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/img/headbg.jpeg); */
+  background-color: #eeeeee;
+  background-position: center 30%;
+  background-size: cover;
+  width: 100%;
+  padding-top: 10px;
+}
+
+
+header .inner {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+
+header .login-button {
+
+  height: 65px;
+  width: 100px;
+}
+
+
+
+
+.login-button {
+  border: 3px solid #4285f4;
+  /* background-color: #; */
+
+  color: #6e6e6e;
+  border-radius: 20px;
+  float: right;
+}
+
+.login-button:hover {
+  background-color: #4285f4;
+  color: #e1eef6;
+}
+
+.post-boxs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image {
+  width: 50%;
+  height: 50%;
+}
+.post-user {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: right;
+
+}

@@ -1,119 +1,98 @@
-$(function() {
 
-    $(".input input").focus(function() {
- 
-       $(this).parent(".input").each(function() {
-          $("label", this).css({
-             "line-height": "18px",
-             "font-size": "18px",
-             "font-weight": "100",
-             "top": "0px"
-          })
-          $(".spin", this).css({
-             "width": "100%"
-          })
-       });
-    }).blur(function() {
-       $(".spin").css({
-          "width": "0px"
-       })
-       if ($(this).val() == "") {
-          $(this).parent(".input").each(function() {
-             $("label", this).css({
-                "line-height": "60px",
-                "font-size": "24px",
-                "font-weight": "300",
-                "top": "10px"
-             })
-          });
- 
-       }
+// 로그인/회원가입창 전환-----------------------------
+$(document).ready(function () {
+  var panelOne = $(".form-panel.two").height(),
+    panelTwo = $(".form-panel.two")[0].scrollHeight;
+
+  $(".form-panel.two")
+    .not(".form-panel.two.active")
+    .on("click", function (e) {
+      e.preventDefault();
+
+      $(".form-toggle").addClass("visible");
+      $(".form-panel.one").addClass("hidden");
+      $(".form-panel.two").addClass("active");
+      $(".form").animate(
+        {
+          height: panelTwo,
+        },
+        200
+      );
     });
- 
-    $(".button").click(function(e) {
-       var pX = e.pageX,
-          pY = e.pageY,
-          oX = parseInt($(this).offset().left),
-          oY = parseInt($(this).offset().top);
- 
-       $(this).append('<span class="click-efect x-' + oX + ' y-' + oY + '" style="margin-left:' + (pX - oX) + 'px;margin-top:' + (pY - oY) + 'px;"></span>')
-       $('.x-' + oX + '.y-' + oY + '').animate({
-          "width": "500px",
-          "height": "500px",
-          "top": "-250px",
-          "left": "-250px",
- 
-       }, 600);
-       $("button", this).addClass('active');
-    })
- 
-    $(".alt-2").click(function() {
-       if (!$(this).hasClass('material-button')) {
-          $(".shape").css({
-             "width": "100%",
-             "height": "100%",
-             "transform": "rotate(0deg)"
-          })
- 
-          setTimeout(function() {
-             $(".overbox").css({
-                "overflow": "initial"
-             })
-          }, 600)
- 
-          $(this).animate({
-             "width": "140px",
-             "height": "140px"
-          }, 500, function() {
-             $(".box").removeClass("back");
- 
-             $(this).removeClass('active')
-          });
- 
-          $(".overbox .title").fadeOut(300);
-          $(".overbox .input").fadeOut(300);
-          $(".overbox .button").fadeOut(300);
- 
-          $(".alt-2").addClass('material-buton');
-       }
- 
-    })
- 
-    $(".material-button").click(function() {
- 
-       if ($(this).hasClass('material-button')) {
-          setTimeout(function() {
-             $(".overbox").css({
-                "overflow": "hidden"
-             })
-             $(".box").addClass("back");
-          }, 200)
-          $(this).addClass('active').animate({
-             "width": "700px",
-             "height": "700px"
-          });
- 
-          setTimeout(function() {
-             $(".shape").css({
-                "width": "50%",
-                "height": "50%",
-                "transform": "rotate(45deg)"
-             })
- 
-             $(".overbox .title").fadeIn(300);
-             $(".overbox .input").fadeIn(300);
-             $(".overbox .button").fadeIn(300);
-          }, 700)
- 
-          $(this).removeClass('material-button');
- 
-       }
- 
-       if ($(".alt-2").hasClass('material-buton')) {
-          $(".alt-2").removeClass('material-buton');
-          $(".alt-2").addClass('material-button');
-       }
- 
-    });
- 
- });
+
+  $(".form-toggle").on("click", function (e) {
+    e.preventDefault();
+    $(this).removeClass("visible");
+    $(".form-panel.one").removeClass("hidden");
+    $(".form-panel.two").removeClass("active");
+    $(".form").animate(
+      {
+        height: panelOne,
+      },
+      200
+    );
+  });
+});
+
+// 회원가입한 유저정보 DB에 저장----------------------------
+function save_user() {
+  let userId = $("#joinid").val();
+  let password = $("#joinpassword").val();
+  let userName = $("#username").val();
+  let email = $("#email").val();
+
+  if (userId === "" || password === "" || userName === "" || email === "") {
+    alert("빈칸이 없도록 작성해주세요.");
+    return;
+  }
+
+  $.ajax({
+    type: "POST",
+    url: "/user/register",
+    data: {
+      id: userId,
+      password: password,
+      name: userName,
+      email: email,
+    },
+    success: function (response) {
+      alert(response["msg"]);
+      window.location.reload();
+    },
+  });
+}
+
+// 로그인기능구현--------------------------------------------------------
+function user_login() {
+  let userId = $("#userid").val();
+  let password = $("#password").val();
+  // let userName = $('#username').val();
+
+  if (userId === "" || password === "") {
+    alert("빈칸을 채워주세요.");
+    return;
+  }
+
+  $.ajax({
+    type: "POST",
+    url: "/user/login",
+    data: {
+      id: userId,
+      password: password
+      // name: userName,
+    },
+    success: function (response) {
+      if (
+        response["msg"] == "회원이 아닙니다." ||
+        response["msg"] == "비밀번호가 일치하지 않습니다."
+      ) {
+        alert(response["msg"]);
+        return;
+      }
+
+      alert(response["msg"]);
+      window.location.href = "/"; // 로그인하고 메인페이지로 이동(이건 마이페이지로 이동하는게 나을지도)
+    },
+  });
+}
+
