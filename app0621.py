@@ -260,22 +260,23 @@ def user_login():
 
 
 # 마이페이지에서 로그인한 유저 게시글 불러오기
-@app.route('/user/post', methods=['GET'])
-def get_user_post():
-    # print('get_users')
+# @app.route('/user/post', methods=['GET'])
+# def get_user_post():
+#     # print('get_users')
+#     userId = session['id']
 
-    sql = """SELECT u.email, u.password, u.name, u.description FROM user u"""
+#     sql = """SELECT u.email, u.password, u.name, u.description FROM user u"""
 
-    curs.execute(sql)
-    rows_user = curs.fetchall()
-    # print(rows_user)
+#     curs.execute(sql)
+#     rows_user = curs.fetchall()
+#     # print(rows_user)
 
-    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
+#     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
 
-    db.commit()
-    db.close()
+#     db.commit()
+#     db.close()
 
-    return json_str, 200
+#     return json_str, 200
 
 
 
