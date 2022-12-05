@@ -1,29 +1,32 @@
 $(document).ready(function () {
+    $('#all-board-list').empty()
     showRandomUser();
-    showBoard();
+    showBoard(1);
     showBackendBoard();
     showFrontendBoard();
 });
 
-function pickThreeNum (user_length) {
-  let num_list = [];
-  let i = 0;
-  while (i < 3) {
-    let n = Math.floor(Math.random() * user_length);
-    if (! same_num(n)) {
-      num_list.push(n);
-      i++;
+function pickThreeNum(user_length) {
+    let num_list = [];
+    let i = 0;
+    while (i < 3) {
+        let n = Math.floor(Math.random() * user_length);
+        if (!same_num(n)) {
+            num_list.push(n);
+            i++;
+        }
     }
-  }
-  function same_num (n) {
-    for (let i = 0; i < num_list.length; i++) {
-      if (n === num_list[i]) {
-        return true;
-      }
+
+    function same_num(n) {
+        for (let i = 0; i < num_list.length; i++) {
+            if (n === num_list[i]) {
+                return true;
+            }
+        }
+        return false;
     }
-    return false;
-  }
-  return num_list;
+
+    return num_list;
 }
 
 function showRandomUser() {
@@ -47,7 +50,7 @@ function showRandomUser() {
                                     <div class="row g-0">
                                         <div class="col-md-3">
                                             <img alt="이미지가 없습니다" class="img-fluid rounded-start" style="height: 70px;"
-                                                 src="/static/images/default_image.png">
+                                                 src="/static/image/default_image.png">
                                         </div>
                                         <div class="col-md-9">
                                             <div class="card-body">
@@ -64,11 +67,10 @@ function showRandomUser() {
     });
 }
 
-function showBoard() {
-    $('#all-board-list').empty()
+function showBoard(i) {
     $.ajax({
         type: "GET",
-        url: "/board",
+        url: `/board/${i}`,
         data: {},
         success: function (response) {
             console.log('success_showBoard')
@@ -82,7 +84,7 @@ function showBoard() {
                                 <div>
                                     <div style="display: flex; align-items: center;">
                                             <img alt="이미지가 없습니다" class="img-fluid rounded-start"
-                                                 src="/static/images/default_image.png"
+                                                 src="/static/image/default_image.png"
                                                  style="height: 40px; margin-right: 10px;">
                                             <span>${user_name}</span> 
                                     </div>
@@ -99,7 +101,7 @@ function showBoard() {
                                     </div>
                                 </div>
                                 `
-                $('#all-board-list').prepend(temp_html)
+                $('#all-board-list').append(temp_html)
             }
         }
     });
@@ -125,7 +127,7 @@ function showBackendBoard() {
                                     <div>
                                         <div style="display: flex; align-items: center;">
                                                 <img alt="이미지가 없습니다" class="img-fluid rounded-start"
-                                                     src="/static/images/default_image.png"
+                                                     src="/static/image/default_image.png"
                                                      style="height: 40px; margin-right: 10px;">
                                                 <span>${user_name}</span> 
                                         </div>
@@ -142,7 +144,7 @@ function showBackendBoard() {
                                         </div>
                                     </div>
                                     `
-                    $('#backend-board-list').prepend(temp_html)
+                    $('#backend-board-list').append(temp_html)
                 }
             }
         }
@@ -169,7 +171,7 @@ function showFrontendBoard() {
                                     <div>
                                         <div style="display: flex; align-items: center;">
                                                 <img alt="이미지가 없습니다" class="img-fluid rounded-start"
-                                                     src="/static/images/default_image.png"
+                                                     src="/static/image/default_image.png"
                                                      style="height: 40px; margin-right: 10px;">
                                                 <span>${user_name}</span> 
                                         </div>
@@ -186,9 +188,21 @@ function showFrontendBoard() {
                                         </div>
                                     </div>
                                     `
-                    $('#frontend-board-list').prepend(temp_html)
+                    $('#frontend-board-list').append(temp_html)
                 }
             }
         }
     });
 }
+
+let page = 1;
+$(window).scroll(function () {
+    if ((window.innerHeight + window.scrollY + 1) >= document.body.offsetHeight) {
+        // document.getElementById('loading icon').style.display = 'block';
+        setTimeout(function () {
+            console.log('page:', ++page)
+            showBoard(page)
+        }, 500)
+
+    }
+});
