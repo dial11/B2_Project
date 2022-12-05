@@ -2,10 +2,12 @@
 
 /* 직접 */
 body {
+
   font-family: "Dokdo", cursive;
   font-family: "Gaegu", cursive;
   font-family: "Gamja Flower", cursive;
   width: 100%;
+
   margin: auto;
 }
 
@@ -18,11 +20,13 @@ body {
 .logo {
   /* padding: 0px 60% 0px 0px; */
   margin: 0px 60% 0px 0px;
+
   margin-bottom: 20px;
   height: 50px;
 }
 
 .lg-button {
+
   text-align: center;
   /* padding-right: 3.5%; */
   margin: 0px 0px 0px 7%;
@@ -45,7 +49,9 @@ header .inner {
   align-items: center;
 }
 
+
 header .login-button {
+
   height: 65px;
   width: 100px;
 }
@@ -57,11 +63,13 @@ header .login-button {
   float: right;
 }
 
+
 .login-button:hover {
   background-color: #4285f4;
   color: #e1eef6;
 }
 /* ------------------<loginbox css>----------------------------------- */
+
 html {
   width: 100%;
   height: 100%;
@@ -74,8 +82,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .overlay,
 .form-panel.one:before {
+
   position: absolute;
   top: 0;
   left: 0;
@@ -91,7 +101,9 @@ body {
   width: 600px;
   height: 600px;
   border-radius: 4px;
+
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+
   box-sizing: border-box;
   margin: 100px auto 10px;
   overflow: hidden;
@@ -111,9 +123,11 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
 .form-toggle:before,
 .form-toggle:after {
   content: "";
+
   display: block;
   position: absolute;
   top: 50%;
@@ -205,7 +219,9 @@ body {
   letter-spacing: 0;
   text-transform: none;
 }
+
 .form-group .form-remember input[type="checkbox"] {
+
   display: inline-block;
   width: auto;
   margin: 0 10px 0 0;
@@ -220,7 +236,9 @@ body {
   box-sizing: border-box;
 }
 .form-panel.one:before {
+
   content: "";
+
   display: block;
   opacity: 0;
   visibility: hidden;
@@ -243,9 +261,11 @@ body {
   transition: 0.3s ease;
   cursor: pointer;
 }
+
 .form-panel.two:before,
 .form-panel.two:after {
   content: "";
+
   display: block;
   position: absolute;
   top: 60px;
@@ -262,8 +282,10 @@ body {
   left: 93%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
 .form-panel.two:hover:before,
 .form-panel.two:hover:after {
+
   opacity: 0;
 }
 .form-panel.two.active {
@@ -271,8 +293,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   cursor: default;
 }
+
 .form-panel.two.active:before,
 .form-panel.two.active:after {
+
   opacity: 0;
 }
 .form-header {
@@ -301,7 +325,9 @@ body {
   color: #fff;
   font-size: 12px;
   text-decoration: none;
+
   text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.1);
+
 }
 .pen-footer a .material-icons {
   width: 12px;

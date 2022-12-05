@@ -5,7 +5,9 @@ body {
   font-family: 'Dokdo', cursive;
   font-family: 'Gaegu', cursive;
   font-family: 'Gamja Flower', cursive;
+
   font-family: "Roboto", sans-serif;
+
   width: 80%;
   margin: auto;
 }
@@ -19,11 +21,13 @@ body {
 .logo {
   /* padding: 0px 60% 0px 0px; */
   margin: 0px 60% 0px 0px;
+
   margin-bottom: 20px;
   height: 50px;
 }
 
 .lg-button {
+
   text-align: center;
   /* padding-right: 3.5%; */
   margin: 0px 0px 0px 7%;
@@ -41,22 +45,27 @@ header {
   padding-top: 10px;
 }
 
+
 header .inner {
   display: flex;
   justify-content: left;
   align-items: center;
 }
 
+
 header .login-button {
+
   height: 65px;
   width: 100px;
 }
 
 
 
+
 .login-button {
   border: 3px solid #4285f4;
   /* background-color: #; */
+
   color: #6e6e6e;
   border-radius: 20px;
   float: right;
@@ -91,4 +100,5 @@ header .login-button {
   flex-direction: column;
   justify-content: center;
   align-items: right;
+
 }

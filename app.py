@@ -34,6 +34,7 @@ def root():
 def login():
     return render_template('login.html')
 
+
 # 글작성페이지로 이동
 @app.route('/post')
 def post():
@@ -46,6 +47,7 @@ def save_user():
     password = request.form['password']
     userName = request.form['name']
     email = request.form['email']
+
 
     sql = f'INSERT INTO project2b2.user(id, email, password, name) VALUES({userId}, {email}, {password}, {userName})'
 
