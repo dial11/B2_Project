@@ -34,3 +34,9 @@
     flex-wrap: nowrap;
     align-items: center;
   }
+
+  .btn.btn-primary.btn-lg.btn-block.btn-can {
+    color: #fff;
+    background-color: #ff1c1c;
+    border-color: #ff1c1c;
+  }

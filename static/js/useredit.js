@@ -27,15 +27,15 @@ function get_user() {
     });
 }
 
-// 유저 저장
-function save_user() {
+// 유저 데이터 수정
+function edit_user_post() {
     let userName = $("#user-name").val();
     let userEmail = $("#user-email").val();
 
     $.ajax({
-        type: "POST",
-        url: "/api/user",
-        data: { name: userName, email: userEmail },
+        type: "PATCH",
+        url: "/user/edit",
+        data: {},
         success: function (response) {
             alert(response["msg"]);
             window.location.reload();
