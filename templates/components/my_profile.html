@@ -1,12 +1,24 @@
-
-<div id="myProfile">
+<style>
+    #myProfile .items-body, #myProfile .card-body {
+        text-align: center;
+    }
+</style>
+<div class="items">
+  <div id="myProfile">
     <div class="card" style="width: 100%;">
+      <div class="items-head">
+        <p>나의 프로필</p>
+        <hr>
+      </div>
+      <div class="items-body">
         <img alt="이미지가 없습니다" class="card-img-top"
              src="{{ url_for('static', filename='image/default_image.png') }}">
-        <div class="card-body" style="text-align: center;">
-            <h5 class="card-title">{{session['id']}}</h5>
-            <p class="card-text" style="margin-bottom: 10px;">{{session['description']}}</p>
-            <a class="btn btn-primary" href="">자세히 보기</a>
+        <div class="card-body">
+          <h5 class="card-title">{{session['id']}}</h5>
+          <p class="card-text" style="margin-bottom: 10px;">{{session['description']}}</p>
+          <a class="btn btn-primary" href="/mypage">자세히 보기</a>
         </div>
+      </div>
     </div>
+  </div>
 </div>
