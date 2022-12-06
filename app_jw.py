@@ -1,7 +1,8 @@
 
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
-from sqlalchemy import create_engine, text
+# from sqlalchemy import create_engine, text
 import pymysql
+import json
 
 app = Flask(__name__)
 
@@ -24,7 +25,7 @@ db = pymysql.connect (
 
 curs = db.cursor()
 
-# 준기님코드합침
+# 준기님코드일부합침
 @app.route('/')
 def root():
     print('show_all')
@@ -136,7 +137,6 @@ def save_user():
     userName = request.form['name']
     email = request.form['email']
 
-
     sql = f'INSERT INTO project2b2.user(id, email, password, name) VALUES({userId}, {email}, {password}, {userName})'
 
     curs.execute(sql) # 데이터베이스에 넣어주기 위함
@@ -158,7 +158,6 @@ def user_login():
     result = curs.fetchone()
     # print(type(result), type(password))
     # return result is None
-
     if result is None:
         # print('none')
         return jsonify({'msg':'회원이 아닙니다.'})
@@ -172,7 +171,7 @@ def user_login():
             # sql = f'select id,name,email from user where user.id = {userId}' 
             # #나중수정
             print(result)
-            session['id'] = userId
+            session['id'] = result[0]
             session['name'] = result[2]
             session['email'] = result[3]
             return jsonify({'msg':'로그인 성공'})
@@ -180,23 +179,33 @@ def user_login():
 # 게시글 등록하기
 @app.route('/write', methods=['POST'])
 def post_board():
-    selectPost = request.form['category_id']
-    postTitle = request.form['title']
-    postContent = request.form['content']
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+    curs = db.cursor()
+
+    selectPost = request.form['category-id']
+    postTitle = request.form['post-title']
+    postContent = request.form['post-content']
     userId = session['id']
     # postFile = request.form['data']
     # userName = request.form['name']
+    # print(selectPost, postTitle, postContent, userId)
 
-    sql1 = f'INSERT INTO project2b2.board(title,content,category_id,user_id) VALUES({postTitle},{postContent},{selectPost},{userId})'
+    sql1 = f'INSERT INTO project2b2.board(title,content,created_at,category_id,user_id) VALUES (%s, %s, NOW(), %s, %s)'
     # sql2 = f'INSERT INTO project2b2.board(data) VALUES(LOAD_FILE("{postFile}"))'
     
-    curs.execute(sql1) # 데이터베이스에 넣어주기 위함
+    curs.execute(sql1,(postTitle,postContent,selectPost,userId)) # 데이터베이스에 넣어주기 위함
     # curs.execute(sql2)
     db.commit() #삽입,삭제,수정할때, 최종적으로 데이터베이스를 만져줄때만
+    db.close()
 
-    return jsonify({'msg':'POST 성공'})
-
-
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

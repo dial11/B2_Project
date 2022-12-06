@@ -6,9 +6,20 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def root():
-    print('show_all')
-    return render_template('index.html', category_name='all')
+def show_main():
+    print('show_main')
+    return render_template('index.html', component_name='main')
+
+
+@app.route('/category')
+def show_by_category():
+    print('show_category')
+    return render_template('index.html', component_name='category')
+
+
+@app.route('/mypage')
+def show_mypage():
+    return render_template('index.html', component_name='mypage')
 
 
 @app.route('/logout', methods=['GET'])
@@ -17,16 +28,35 @@ def logout():
     return redirect('/')
 
 
-@app.route('/category-backend')
-def backendLayout():
-    print('show_backend')
-    return render_template('index.html', category_name='backend')
+@app.route('/category-list', methods=['GET'])
+def get_category_list():
+    print('get_categories')
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+
+    curs = db.cursor()
+
+    sql = """
+        SELECT c.name, c.name_en
+        FROM category c
+        """
+
+    curs.execute(sql)
+    rows_user = curs.fetchall()
+    print(rows_user)
+
+    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
+
+    db.commit()
 
 
-@app.route('/category-frontend')
-def frontendLayout():
-    print('front_backend')
-    return render_template('index.html', category_name='frontend')
+    return json_str, 200
 
 
 @app.route('/user', methods=['GET'])
@@ -55,38 +85,6 @@ def get_users():
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
 
     db.commit()
-    db.close()
-
-    return json_str, 200
-
-
-@app.route('/category', methods=['GET'])
-def get_categories():
-    print('get_categories')
-    db = pymysql.connect(
-        user='project2b2',
-        password='project2b2',
-        host='182.212.65.173',
-        port=3306,
-        database='project2b2',
-        charset='utf8'
-    )
-
-    curs = db.cursor()
-
-    sql = """
-        SELECT c.name
-        FROM category c
-        """
-
-    curs.execute(sql)
-    rows_user = curs.fetchall()
-    print(rows_user)
-
-    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
-
-    db.commit()
-    db.close()
 
     return json_str, 200
 
@@ -94,7 +92,6 @@ def get_categories():
 @app.route('/board', defaults={'category': 'all', 'page': 1})
 @app.route('/board/<string:category>/<int:page>')
 def get_boards(category, page):
-
     db = pymysql.connect(
         user='project2b2',
         password='project2b2',
@@ -112,7 +109,7 @@ def get_boards(category, page):
     if category == 'all':
         print('get_all_boards')
         sql = f"""
-            SELECT b.title, b.content, b.created_at, u.name, c.name
+            SELECT b.title, b.content, b.created_at, u.name, c.name_en
             FROM board b
             INNER JOIN `user` u
             ON b.user_id = u.id
@@ -125,13 +122,13 @@ def get_boards(category, page):
     else:
         print(f'get_{category}_boards')
         sql = f"""
-            SELECT b.title, b.content, b.created_at, u.name, c.name
+            SELECT b.title, b.content, b.created_at, u.name, c.name_en
             FROM board b
             INNER JOIN `user` u
             ON b.user_id = u.id
             INNER JOIN category c
             ON b.category_id = c.id
-            WHERE c.name = '{category}'
+            WHERE c.name_en = '{category}'
             ORDER BY b.id desc
             LIMIT {perpage}
             OFFSET {startat}
@@ -144,7 +141,6 @@ def get_boards(category, page):
     json_str = json.dumps(rows_board, indent=4, sort_keys=True, default=str)
 
     db.commit()
-    db.close()
 
     return json_str, 200
 
@@ -231,7 +227,28 @@ def user_login():
             return jsonify({'msg': '로그인 성공'})
 
 
+# 게시글 등록하기
+@app.route('/write', methods=['POST'])
+def post_board():
+    selectPost = request.form['category_id']
+    postTitle = request.form['title']
+    postContent = request.form['content']
+    userId = session['id']
+    # postFile = request.form['data']
+    # userName = request.form['name']
+
+    sql1 = f'INSERT INTO project2b2.board(title,content,category_id,user_id) VALUES({postTitle},{postContent},{selectPost},{userId})'
+    # sql2 = f'INSERT INTO project2b2.board(data) VALUES(LOAD_FILE("{postFile}"))'
+
+    curs.execute(sql1)  # 데이터베이스에 넣어주기 위함
+    # curs.execute(sql2)
+    db.commit()  # 삽입,삭제,수정할때, 최종적으로 데이터베이스를 만져줄때만
+
+    return jsonify({'msg': 'POST 성공'})
+
+
 # ----------------정지우님꺼 합친 부분
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
