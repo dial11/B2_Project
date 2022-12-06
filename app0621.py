@@ -230,18 +230,35 @@ def get_user_post():
     userId = session['id']
 
     sql = '''SELECT  `title`, `content`, `created_at` FROM board WHERE user_id = %s;'''
+    curs.execute(sql, (userId))
+    rows_user = curs.fetchall()
+
+    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
+    return json_str, 200
+
+
+@app.route('/user/edit', methods=['PATCH'])
+def edit_user_post():
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+    curs = db.cursor()
+
+    userId = session['id']
+
+    sql = '''SELECT  `email`, `name`, `description` FROM user WHERE id = %s;'''
 
     curs.execute(sql, (userId))
     rows_user = curs.fetchall()
-    # print(rows_user)
-    # list_user_post = list(rows_user)
-    # print(list_user_post)
+    print(rows_user)
 
-    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
-    # print(json_str)
+    return jsonify({'msg':'!!.'})
 
-    # return list_user_post
-    return json_str, 200
 
 if __name__ == '__main__' :
     app.run('0.0.0.0', port=5000, debug=True)
