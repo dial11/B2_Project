@@ -74,34 +74,41 @@
                     name="category-id"
                 >
                     <option value="">게시글 분야</option>
-                    <option value="1">FE</option>
-                    <option value="2">BE</option>
+                    <option value="1">백엔드 개발자</option>
+                    <option value="2">프론트엔드 개발자</option>
+                    <option value="3">모바일 개발자</option>
+                    <option value="4">게임 개발자</option>
+                    <option value="5">보안 개발자</option>
+                    <option value="6">데이터 사이언티스트</option>
                 </select>
                 <div class="invalid-feedback">
                     게시글의 분야를 선택하지않았습니다.
                 </div>
                 </div>
                 <div class="form-content">
-                
                     <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label"
-                        >제목</label
-                    >
-                    <input
-                        type="text"
-                        name="post-title"
-                        class="form-control post-title"
-                        id="exampleFormControlInput1"
-                        placeholder="제목을 입력해주세요."
-                    />
+                        <label for="exampleFormControlInput1" class="form-label"
+                            >제목</label
+                        >
+                        <input
+                            type="text"
+                            name="post-title"
+                            class="form-control post-title"
+                            id="exampleFormControlInput1"
+                            value="제목을 입력해주세요."
+                        />
                     </div>
 
                     <textarea class="post-content" id="editor" name="post-content">
         내용을 입력해주세요.</textarea
                     >
+                    <!-- 파일추가
+                    <input id="file" type="file" name="file">
+                    <button id="file-btn"><input type="submit" value="저장" class="btn btn-default"></button> -->
                     <div class="form-group">
-              <input type="submit" value="등록하기" />
-            </div>
+                        <input type="submit" value="등록하기" />
+                    </div>
+                </div>
           </form>
         </div>
       </div>

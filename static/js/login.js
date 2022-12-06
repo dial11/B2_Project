@@ -40,6 +40,8 @@ function save_user() {
   let userName = $("#username").val();
   let email = $("#email").val();
 
+  console.log(userId, password, userName, email);
+
   if (userId === "" || password === "" || userName === "" || email === "") {
     alert("빈칸이 없도록 작성해주세요.");
     return;
@@ -55,8 +57,18 @@ function save_user() {
       email: email,
     },
     success: function (response) {
-      alert(response["msg"]);
-      window.location.reload();
+      if (
+        response["msg"] == "동일한 이메일이 있습니다." ||
+        response["msg"] == "동일한 아이디가 있습니다." ||
+        response["msg"] == "동일한 닉네임이 있습니다." ||
+        response["msg"] == "이메일 형식이 아닙니다."
+      ) {
+        alert(response["msg"]);
+        return;
+      } else {
+        alert(response["msg"]);
+        window.location.reload();
+      }
     },
   });
 }
@@ -93,20 +105,4 @@ function user_login() {
       window.location.href = "/"; // 로그인하고 메인페이지로 이동(이건 마이페이지로 이동하는게 나을지도)
     },
   });
-}
-
-// 이메일 유효성검사----------------------------------
-function check_email() {
-  let email = $("#email").val();
-  var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-
-  if (exptext.test(email) == false) {
-    //이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우
-    alert("이메일형식이 올바르지 않습니다.");
-    return false;
-    // userinput.email.focus();
-  } else {
-    alert("이메일형식이 올바릅니다!")
-    return true;
-  }
 }

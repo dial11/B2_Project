@@ -44,3 +44,20 @@ function post_board() {
     },
   });
 }
+
+// // 파일추가-------------------------------------------
+// $("#file-btn").click(function () {
+//   const aa = $("#file").val();
+//   const a = aa.split('\\');
+
+//   $.ajax ({
+//     type:'POST',
+//     url: '/upload',
+//     data: {
+//       file: a[2]
+//     },
+//     success: function (response) {
+//       console.log(response['msg']);
+//     }
+//   })
+// });
