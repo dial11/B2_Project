@@ -1,4 +1,3 @@
-
 // 로그인/회원가입창 전환-----------------------------
 $(document).ready(function () {
   var panelOne = $(".form-panel.two").height(),
@@ -78,7 +77,7 @@ function user_login() {
     url: "/user/login",
     data: {
       id: userId,
-      password: password
+      password: password,
       // name: userName,
     },
     success: function (response) {
@@ -96,3 +95,18 @@ function user_login() {
   });
 }
 
+// 이메일 유효성검사----------------------------------
+function check_email() {
+  let email = $("#email").val();
+  var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+  if (exptext.test(email) == false) {
+    //이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우
+    alert("이메일형식이 올바르지 않습니다.");
+    return false;
+    // userinput.email.focus();
+  } else {
+    alert("이메일형식이 올바릅니다!")
+    return true;
+  }
+}
