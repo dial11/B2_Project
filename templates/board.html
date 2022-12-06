@@ -1,73 +1,37 @@
 <table id="board">
     <thead>
-        <tr>
-            <th>작성자</th>
-        </tr>
+        
     </thead>
     <tbody>
-
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-10">
+                    <div class="column">
+                        <div id="board_user">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                        
+                        
     </tbody>
 </table>
+<script src="{{ url_for('static', filename='js/board.js') }}"></script>
 
-<script>
-    $(document).ready(function () {
-        get_board();
-    });
-
-    function get_board() {
-        $.ajax({
-            type: "GET",
-            url: "/board",
-            data: {},
-            success: function (response) {
-                let rows = response["msg"];
-
-                 console.log(rows)
-
-                 
-                for (let i = 0; i < rows.length; i++) {
-                    let title = rows[i]["title"];
-                    let content = rows[i]["content"];
-                    let user_id = rows[i]["user_id"];
-                    let category_id = rows[i]["category_id"];
-                    let created_at = rows[i]["created_at"];
-                    let updated_at = rows[i]["updated_at"];
-
-
-                    let temp_html = `<div class="images">
-                                        <div class="div1">
-                                            <img src="${user_id}" alt="${user_id}">${user_id}
-                                        </div>
-                                        <div class="div2">
-                                            ${title}${content}${created_at}${updated_at}${category_id}
-                                        </div>
-                                    </div>`;
-
-                    $("#rows").append(temp_html);
-                }
-                
-            },
-        });
-    }
-
-    //삭제
-    function del_user(user_id) {
-        $.ajax({
-            type: "DELETE",
-            url: "/api/user",
-            data: { user_id_give: user_id },
-            // data: {},
-            success: function (response) {
-                // console.log();
-                alert(response['msg']);
-                window.location.reload();
-            },
-        });
-    }
-
-</script>
-
+<head><link rel="stylesheet" href="{{ url_for('static', filename='css/board.css') }}">
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+></script></head>
 <body>
-    <div id="rows">
-    </div>
+    
 </body>

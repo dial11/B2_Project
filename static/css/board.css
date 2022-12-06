@@ -1,0 +1,32 @@
+.card-box {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        height: 100vh;
+        padding: 2rem 1rem 3.5rem;
+        box-sizing: border-box;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+
+.card-body {
+    margin-bottom: 0px;
+    max-width: 640px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: auto;
+    border-radius: 24px;
+    padding: 16px;
+    box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
+    position: relative;
+    -webkit-box-align: center;
+    align-items: center;
+}
