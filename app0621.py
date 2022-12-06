@@ -4,19 +4,6 @@ import json
 
 app = Flask(__name__)
 
-
-db = pymysql.connect(
-    user='project2b2',
-    password='project2b2',
-    host='182.212.65.173',
-    port=3306,
-    database='project2b2',
-    charset='utf8'
-)
-
-curs = db.cursor()
-
-
 @app.route('/')
 def root():
     # print('show_all')
@@ -37,6 +24,39 @@ def backendLayout():
 def frontendLayout():
     # print('front_backend')
     return render_template('index.html', category_name='frontend')
+
+
+
+@app.route('/category', methods=['GET'])
+def get_categories():
+    # db = pymysql.connect(
+    # user='project2b2',
+    # password='project2b2',
+    # host='182.212.65.173',
+    # port=3306,
+    # database='project2b2',
+    # charset='utf8'
+    # )
+
+    curs = db.cursor()
+
+    sql = """
+        SELECT c.name
+        FROM category c
+        """
+
+    curs.execute(sql)
+    rows_user = curs.fetchall()
+    # print(rows_user)
+
+    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
+
+    db.commit()
+    # db.close()
+
+    return json_str, 200
+
+
 
 
 @app.route('/user', methods=['GET'])
@@ -187,96 +207,47 @@ def user_login():
         else:
             # sql = f'select id,name,email from user where user.id = {userId}'
             # #나중수정
-            print(result)
+            # print(result)
             session['id'] = userId
             session['name'] = result[2]
             session['email'] = result[3]
             session['description'] = result[4]
             return jsonify({'msg':'로그인 성공'})
 
-# @app.route('/api/user', methods=['GET'])
-# def get_user():
-
-#     sql = "SELECT id, name, email FROM student"
-#     cur.execute(sql)
-
-#     data_list = cur.fetchall()
-
-#     user_list = []
-
-#     # print([data_list])
-
-#     for record in data_list:
-#         temp = {
-#             'id': record[0],
-#             'name': record[1],
-#             'email': record[2]
-#         }
-#         user_list.append(temp)
-#     # print(user_list)
-#     db.commit()
-
-#     return jsonify({'msg':  user_list})
-
-# @app.route('/api/user', methods=['POST'])
-# def save_user():
-
-#     userName = request.form['name']
-#     userEmail = request.form['email']
-
-#     sql = '''INSERT INTO `student` (name, email) VALUES(%s, %s);'''
-
-#     cur.execute(sql, (userName, userEmail))
-#     db.commit()
-
-#     return jsonify({'msg': "등록성공!"})
-
-# @app.route('/api/user', methods=['DELETE'])
-# def del_user():
-
-#     user_id_receive = request.form['user_id_give']
-#     # print(del_id_receive)
-
-#     sql = '''DELETE FROM `project2b2`.`student` WHERE  `id`=%s;'''
-
-#     cur.execute(sql, (user_id_receive))
-#     db.commit()
-
-#     return jsonify({'msg': "삭제성공!"})
-
-# @app.route('/api/user', methods=['PATCH'])
-# def patch_user():
-
-#     patchUserName_receive = request.form['patchUserName_give']
-#     patchUserEmail_receive = request.form['patchUserEmail_give']
-#     user_id_receive = request.form['user_id_give']
-
-#     sql = '''UPDATE `project2b2`.`student` SET name=%s,email=%s WHERE id=%s;'''
-
-#     cur.execute(sql, (patchUserName_receive, patchUserEmail_receive, user_id_receive))
-#     db.commit()
-
-#     return jsonify({'msg': "수정성공!"})
-
-
 # 마이페이지에서 로그인한 유저 게시글 불러오기
-# @app.route('/user/post', methods=['GET'])
-# def get_user_post():
-#     # print('get_users')
-#     userId = session['id']
+@app.route('/user/post', methods=['GET'])
+def get_user_post():
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+    curs = db.cursor()
 
-#     sql = """SELECT u.email, u.password, u.name, u.description FROM user u"""
+    userId = session['id']
 
-#     curs.execute(sql)
-#     rows_user = curs.fetchall()
-#     # print(rows_user)
+    sql = '''SELECT  `title`, `content`, `created_at` FROM board WHERE user_id = %s;'''
 
-#     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
+    curs.execute(sql, (userId))
+    rows_user = curs.fetchall()
+    # print(rows_user)
 
-#     db.commit()
-#     db.close()
 
-#     return json_str, 200
+    for i in rows_user:
+        # print(i)
+        rows_user_post = i
+        for j in rows_user_post:
+            print(j)
+
+    # db.commit()
+    # db.close()
+
+    # return json_str, 200
+
+    return jsonify({'msg':'성공'})
 
 
 
