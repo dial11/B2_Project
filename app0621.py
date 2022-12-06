@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/')
 def root():
     # print('show_all')
-    return render_template('mypage.html', category_name='all')
+    return render_template('useredit.html', category_name='all')
 
 @app.route('/logout',methods=['GET'])
 def logout():
@@ -234,22 +234,14 @@ def get_user_post():
     curs.execute(sql, (userId))
     rows_user = curs.fetchall()
     # print(rows_user)
+    # list_user_post = list(rows_user)
+    # print(list_user_post)
 
+    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
+    # print(json_str)
 
-    for i in rows_user:
-        # print(i)
-        rows_user_post = i
-        for j in rows_user_post:
-            print(j)
-
-    # db.commit()
-    # db.close()
-
-    # return json_str, 200
-
-    return jsonify({'msg':'성공'})
-
-
+    # return list_user_post
+    return json_str, 200
 
 if __name__ == '__main__' :
     app.run('0.0.0.0', port=5000, debug=True)
