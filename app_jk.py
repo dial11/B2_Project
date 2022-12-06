@@ -4,15 +4,18 @@ import json
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def root():
     print('show_all')
     return render_template('index.html', category_name='all')
 
-@app.route('/logout',methods=['GET'])
+
+@app.route('/logout', methods=['GET'])
 def logout():
     session.pop('id', None)
     return redirect('/')
+
 
 @app.route('/category-backend')
 def backendLayout():
@@ -57,10 +60,41 @@ def get_users():
     return json_str, 200
 
 
-@app.route('/board', defaults={'page': 1})
-@app.route('/board/<int:page>')
-def get_boards(page):
-    print('get_boards')
+@app.route('/category', methods=['GET'])
+def get_categories():
+    print('get_categories')
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+
+    curs = db.cursor()
+
+    sql = """
+        SELECT c.name
+        FROM category c
+        """
+
+    curs.execute(sql)
+    rows_user = curs.fetchall()
+    print(rows_user)
+
+    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
+
+    db.commit()
+    db.close()
+
+    return json_str, 200
+
+
+@app.route('/board', defaults={'category': 'all', 'page': 1})
+@app.route('/board/<string:category>/<int:page>')
+def get_boards(category, page):
+
     db = pymysql.connect(
         user='project2b2',
         password='project2b2',
@@ -75,17 +109,33 @@ def get_boards(page):
     perpage = 5
     startat = (page - 1) * perpage
 
-    sql = f"""
-        SELECT b.title, b.content, b.created_at, u.name, c.name
-        FROM board b
-        INNER JOIN `user` u
-        ON b.user_id = u.id
-        INNER JOIN category c
-        ON b.category_id = c.id
-        ORDER BY b.id desc
-        LIMIT {perpage}
-        OFFSET {startat}
-        """
+    if category == 'all':
+        print('get_all_boards')
+        sql = f"""
+            SELECT b.title, b.content, b.created_at, u.name, c.name
+            FROM board b
+            INNER JOIN `user` u
+            ON b.user_id = u.id
+            INNER JOIN category c
+            ON b.category_id = c.id
+            ORDER BY b.id desc
+            LIMIT {perpage}
+            OFFSET {startat}
+            """
+    else:
+        print(f'get_{category}_boards')
+        sql = f"""
+            SELECT b.title, b.content, b.created_at, u.name, c.name
+            FROM board b
+            INNER JOIN `user` u
+            ON b.user_id = u.id
+            INNER JOIN category c
+            ON b.category_id = c.id
+            WHERE c.name = '{category}'
+            ORDER BY b.id desc
+            LIMIT {perpage}
+            OFFSET {startat}
+            """
 
     curs.execute(sql)
     rows_board = curs.fetchall()
@@ -99,26 +149,26 @@ def get_boards(page):
     return json_str, 200
 
 
-# 정지우님
-
+# ----------------정지우님꺼 합친 부분
 app.secret_key = '1221'
 
-db = pymysql.connect (
+db = pymysql.connect(
     # 데이터베이스에 접속할 사용자 아이디
-    user = 'project2b2',
+    user='project2b2',
     # 사용자 비밀번호
-    password = 'project2b2',
+    password='project2b2',
     # 접속할 데이터베이스의 주소 (같은 컴퓨터에 있는 데이터베이스에 접속하기 때문에 localhost)
-    host = '182.212.65.173',
+    host='182.212.65.173',
     # 관계형 데이터베이스는 주로 3306 포트를 통해 연결됨
-    port = 3306,
+    port=3306,
     # 실제 사용할 데이터베이스 이름
-    database = 'project2b2',
+    database='project2b2',
     # 해석
-    charset = 'utf8'
+    charset='utf8'
 )
 
 curs = db.cursor()
+
 
 # 로그인/회원가입페이지로 이동
 @app.route('/login')
@@ -131,6 +181,7 @@ def login():
 def post():
     return render_template('post.html')
 
+
 # 회원가입
 @app.route('/user/register', methods=['POST'])
 def save_user():
@@ -139,13 +190,12 @@ def save_user():
     userName = request.form['name']
     email = request.form['email']
 
-
     sql = f'INSERT INTO project2b2.user(id, email, password, name) VALUES({userId}, {email}, {password}, {userName})'
 
-    curs.execute(sql) # 데이터베이스에 넣어주기 위함
-    db.commit() #삽입,삭제,수정할때, 최종적으로 데이터베이스를 만져줄때만
+    curs.execute(sql)  # 데이터베이스에 넣어주기 위함
+    db.commit()  # 삽입,삭제,수정할때, 최종적으로 데이터베이스를 만져줄때만
 
-    return jsonify({'msg':'회원 가입 성공'})
+    return jsonify({'msg': '회원 가입 성공'})
 
 
 # 로그인
@@ -164,12 +214,12 @@ def user_login():
 
     if result is None:
         # print('none')
-        return jsonify({'msg':'회원이 아닙니다.'})
+        return jsonify({'msg': '회원이 아닙니다.'})
 
     else:
         if result[1] != password:
             # print('password')
-            return jsonify({'msg':'비밀번호가 일치하지 않습니다.'})
+            return jsonify({'msg': '비밀번호가 일치하지 않습니다.'})
 
         else:
             # sql = f'select id,name,email from user where user.id = {userId}'
@@ -178,8 +228,10 @@ def user_login():
             session['id'] = userId
             session['name'] = result[2]
             session['email'] = result[3]
-            return jsonify({'msg':'로그인 성공'})
+            return jsonify({'msg': '로그인 성공'})
 
+
+# ----------------정지우님꺼 합친 부분
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
