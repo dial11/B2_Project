@@ -27,7 +27,7 @@ def show_by_category():
 
 @app.route('/mypage')
 def show_mypage():
-    return render_template('index.html', component_name='mypage')
+    return render_template('mypage.html', component_name='mypage')
 
 
 @app.route('/logout', methods=['GET'])
@@ -320,6 +320,7 @@ def get_user_post():
     sql = '''SELECT  `title`, `content`, `created_at` FROM board WHERE user_id = %s;'''
     curs.execute(sql, (userId))
     rows_user = curs.fetchall()
+    print(rows_user)
 
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
     return json_str, 200
@@ -327,6 +328,10 @@ def get_user_post():
 @app.route('/useredit')
 def useredit():
     return render_template('useredit.html')
+
+@app.route('/mypage')
+def mypage():
+    return render_template('mypage.html')
 
 # 마이페이지 수정(유저 정보 불러오기)
 @app.route('/user/edit', methods=['GET'])
