@@ -48,19 +48,16 @@
 
         <div class="form-group">
           <label for="user-name" class="form-label mt-4">이름</label>
-          <input type="text" class="form-control" id="user-name" />
+          <input type="text" class="form-control" id="edit-name" name="value_name" value="">
         </div>
 
         <div class="form-group">
           <label for="user-email" class="form-label mt-4">이메일</label>
-          <input type="text" class="form-control" id="user-email" />
+          <input type="text" class="form-control" id="edit-email" name="value_email" value="">
         </div>
 
       <form>
-        <div class="form-group">
-          <label for="user-desc" class="form-label mt-4">내 소개</label>
-          <textarea class="form-control" id="user-desc" rows="5"></textarea>
-        </div>
+        <div id="form-user-desc"></div>
       </form>
 
       <div class="my-profile-pw-btn">
@@ -70,7 +67,7 @@
           <div class="invalid-feedback" id="check-msg"></div>
         </div>
         <div class="my-profile-button">
-          <button class="btn btn-primary btn-lg btn-block" type="submit">수정</button>
+          <button class="btn btn-primary btn-lg btn-block" onclick="edit_user_post()">수정</button>
           <button class="btn btn-primary btn-lg btn-block btn-can" onclick="history.back()">취소</button>
         </div>
       </div>
