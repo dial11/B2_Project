@@ -54,13 +54,11 @@ function edit_user_post() {
                 alert(response["msg"]);
                 window.location.reload();
             }
-
-            // window.location.reload();
         },
     });
 }
 
-// 유저 이미지
+// 유저 이미지 등록
 function user_img_post() {
 
     let file = $('#file')[0].files[0]
@@ -78,6 +76,19 @@ function user_img_post() {
         processData: false,
         success: function(response) {
             alert(response["msg"])
+            window.location.reload();
+        }
+    });
+}
+
+// 유저 이미지 삭제
+function del_user_img() {
+    $.ajax({
+        type: "DELETE",
+        url: "/user/edit",
+        success: function(response) {
+            alert(response["msg"])
+            window.location.reload();
         }
     });
 }
