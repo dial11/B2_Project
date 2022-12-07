@@ -12,8 +12,14 @@ cur = db.cursor()
 
 
 @app.route('/board/<int:board_id>')
-def getBoard(board_id):
+def boardout(board_id):
+    print(board_id)
+    return render_template('board.html', board_id= board_id)
 
+
+@app.route('/board/<int:board_id>/data')
+def getBoard(board_id):
+    
     db = pymysql.connect(host='182.212.65.173', user='project2b2', db='project2b2', password='project2b2', charset='utf8')
     curs = db.cursor()
 
@@ -24,19 +30,19 @@ def getBoard(board_id):
         ON b.user_id = u.id
         INNER JOIN category c
         ON b.category_id = c.id
-        ORDER BY b.id
+        
         WHERE b.id = '{board_id}'
         """
 
     curs.execute(sql_board)
-    rows_board = curs.fetchone()
+    rows_board = curs.fetchall()
     print(rows_board)
 
     json_str = json.dumps(rows_board, indent=4, sort_keys=True, default=str, )
 
     db.commit()
     db.close()
-    return json_str, 200
+    return json_str, 200, 
 
 
 
@@ -61,26 +67,25 @@ def del_board():
     return jsonify({'result': 'success', 'msg': '삭제 완료!'})
 
 
-@app.route('/boardedit/<int:id>', methods=["GET"])
-def edit_board():
-    
+@app.route('/boardedit/<int:board_id>')
+def editBoards(board_id):
+    print(board_id)
+    return render_template('boardedit.html', board_id= board_id)
+
+@app.route('/boardedit/<int:board_id>/re', methods=["GET"])
+def editBoard(board_id):
         db = pymysql.connect(host='182.212.65.173', user='project2b2', db='project2b2', password='project2b2', charset='utf8')
         curs = db.cursor()
-        board_id = request.form['board_id_give']
-        bid = int(board_id)
+        
         sql_board = f"""
-        SELECT b.title, b.content, b.created_at, u.name, c.name, b.id, b.updated_at
+        SELECT b.title, b.content, b.id
         FROM board b
-        INNER JOIN `user` u
-        ON b.user_id = u.id
-        INNER JOIN category c
-        ON b.category_id = c.id
-        ORDER BY b.id
-        WHERE id =  """+ str(bid) +"""
+          
+        WHERE b.id = '{board_id}'
         """
 
         curs.execute(sql_board)
-        rows_board = curs.fetchone()
+        rows_board = curs.fetchall()
     
 
         json_str = json.dumps(rows_board, indent=4, sort_keys=True, default=str, )
@@ -89,28 +94,30 @@ def edit_board():
         db.close()
         return json_str, 200 
 
-@app.route('/boardedit', methods=['POST'])
-def postBoard():
+@app.route('/boardedit/<int:board_id>/post', methods=['PATCH'])
+def postBoard(board_id):
         db = pymysql.connect(host='182.212.65.173', user='project2b2', db='project2b2', password='project2b2', charset='utf8')
         curs = db.cursor()
-        board_id = request.form['board_id_give']
-        bid = int(board_id)
+        
         selectPost = request.form['category_id']
         postTitle = request.form['title']
         postContent = request.form['content']
-        userId = session['id']
+        # userId = session['id']
         
 
-        sql1 = f"""UPDATE board SET (title,content,category_id,user_id) = VALUES({postTitle},{postContent},{selectPost},{userId}) 
-            WHERE id =  """+ str(bid) +""" """
+        sql1 = f"""UPDATE board b
+            SET title = %s , content = %s , category_id = %s , updated_at = NOW() 
+             
+            WHERE b.id = '{board_id}' """
 
         
         
-        curs.execute(sql1)
+        curs.execute(sql1,(postTitle,postContent,selectPost))
     
+        
         db.commit() 
 
-        return jsonify({'msg':'POST 성공'})
+        return jsonify({'result': 'success', 'msg': '수정 완료!'})
 
 
     

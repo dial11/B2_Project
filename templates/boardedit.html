@@ -1,43 +1,198 @@
 <!DOCTYPE html>
 <html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- tiny 에디터 연결 -->
+    <script
+      src="https://cdn.tiny.cloud/1/afamly4ao81feb323ib8v2x4hxp1xvd7qvm54ucdl6itpb3f/tinymce/6/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
 
     <!-- CSS 연결 -->
     <!-- <link href="{{ url_for('static', filename='css/reset.css') }}" rel="stylesheet"> -->
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link
+      href="{{ url_for('static', filename='css/style.css') }}"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../static/css/post.css" />
 
     <!-- javascript 연결 -->
-    <script src="{{ url_for('static', filename='js/board.js') }}"></script>
+    <script defer src="../static/js/post.js"></script>
+    <script defer src="../static/js/board.js"></script>
 
     <!--폰트-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Dokdo&family=Gaegu:wght@300;400;700&family=Gamja+Flower&display=swap"
-        rel="stylesheet">
+      href="https://fonts.googleapis.com/css2?family=Dokdo&family=Gaegu:wght@300;400;700&family=Gamja+Flower&display=swap"
+      rel="stylesheet"
+    />
 
     <title>개발 is in</title>
     <link rel="icon" href="../static/img/icon.png" />
+    <script>
+        let myboard_id = '{{board_id}}' ;
+    </script>
+  </head>
 
-
-</head>
-
-<body>
+  <body>
     {% include "components/header.html" %}
-    <div id="board_edit">
+    <div class="post-boxs">
+      <div class="form-header">
+        <h1>POST</h1>
+      </div>
+      <div class="post-user">
+        <!-- 프로필사진도 db에 존재하면 변경, 로그인을 했을 경우 작성자의 닉네임 가져오기 -->
+        <img
+          class="profile-image"
+          src="../static/image/baseprofile.png"
+          alt="타이틀로고"
+        />
+        <p>작성자닉네임 : {{session['name']}}</p>
+        <p>작성자이메일 : {{session['email']}}</p>
+        <p id="clock" style="color: black">clock</p>
+      </div>
+      <div class="post-contents">
+        <div class="mb-3">
+            <form method="POST" action="/write">
+                <select
+                    class="form-select"
+                    required
+                    aria-label="select example"
+                    id="selectPost"
+                    name="category-id"
+                >
+                    <option value="">게시글 분야</option>
+                    <option value="1">백엔드 개발자</option>
+                    <option value="2">프론트엔드 개발자</option>
+                    <option value="3">모바일 개발자</option>
+                    <option value="4">게임 개발자</option>
+                    <option value="5">보안 개발자</option>
+                    <option value="6">데이터 사이언티스트</option>
+                </select>
+                <div class="invalid-feedback">
+                    게시글의 분야를 선택하지않았습니다.
+                </div>
+                </div>
+                <div id="board-edit"></div>
+          </form>
+        </div>
+      </div>
     </div>
+  </body>
 
+  <script>
+    $(function () {
+      var plugins = [
+        "advlist",
+        "autolink",
+        "lists",
+        "link",
+        "image",
+        "charmap",
+        "print",
+        "preview",
+        "anchor",
+        "searchreplace",
+        "visualblocks",
+        "code",
+        "fullscreen",
+        "insertdatetime",
+        "media",
+        "table",
+        "paste",
+        "code",
+        "help",
+        "wordcount",
+        "save",
+      ];
+      var edit_toolbar =
+        "formatselect fontselect fontsizeselect |" +
+        " forecolor backcolor |" +
+        " bold italic underline strikethrough |" +
+        " alignjustify alignleft aligncenter alignright |" +
+        " bullist numlist |" +
+        " table tabledelete |" +
+        " link image";
+
+      tinymce.init({
+        language: "ko_KR", //한글판으로 변경
+        selector: "#editor",
+        height: 500,
+        menubar: false,
+        plugins: plugins,
+        toolbar: edit_toolbar,
+
+        /*** image upload ***/
+        image_title: true,
+        /* enable automatic uploads of images represented by blob or data URIs*/
+        automatic_uploads: true,
+        /*
+                URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
+                images_upload_url: 'postAcceptor.php',
+                here we add custom filepicker only to Image dialog
+            */
+        file_picker_types: "image",
+        /* and here's our custom image picker*/
+        file_picker_callback: function (cb, value, meta) {
+          var input = document.createElement("input");
+          input.setAttribute("type", "file");
+          input.setAttribute("accept", "image/*");
+
+          /*
+                Note: In modern browsers input[type="file"] is functional without
+                even adding it to the DOM, but that might not be the case in some older
+                or quirky browsers like IE, so you might want to add it to the DOM
+                just in case, and visually hide it. And do not forget do remove it
+                once you do not need it anymore.
+                */
+          input.onchange = function () {
+            var file = this.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            $.ajax({
+              type:"POST",
+              url:"/post/image",
+              cache: false,
+              contentType: false,
+              processData: false,
+              data: formData,
+              success: function (response) {
+                console.log(response['url'])
+                cb(response['url'],{title:file.name})
+              }
+            })
+            
+
+          };
+          input.click();
+        },
+        /*** image upload ***/
+
+        content_style:
+          "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+      });
+
+      $("#save").on("click", function () {
+        var content = tinymce.activeEditor.getContent();
+        console.log(content);
+      });
+    });
+  </script>
 </html>
