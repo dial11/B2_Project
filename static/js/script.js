@@ -99,19 +99,21 @@ function showBoard(category, page, have_to_reset) {
         let temp_html = `
                                 <div>
                                     <div style="display: flex; align-items: center;">
+                                        <div style="display: flex; align-items: center; cursor: pointer;"  onclick="location.href=''">
                                             <img alt="이미지가 없습니다" class="img-fluid rounded-start"
                                                  src="/static/image/default_image.png"
                                                  style="height: 40px; margin-right: 10px;">
                                             <span>${user_name}</span> 
+                                        </div>
                                     </div>
-                                    <div class="card" style="margin-bottom: 10px;">
+                                    <div class="card" style="margin-bottom: 10px; cursor: pointer;"  onclick="location.href=''">
                                         <div class="card-body">
-                                            <blockquote class="blockquote mb-0" style="height: 120px;">
+                                            <blockquote class="blockquote mb-0" style=" overflow: hidden; height: 200px;">
                                                 <div style="margin-bottom: 10px;">
                                                     <span>${name}</span> 
                                                     <span style="text-align: right; font-size: 12px">(${time})</span>
                                                 </div>
-                                                <span>${content}</span>
+                                                <p class="board-content">${content}</p>
                                             </blockquote>
                                         </div>
                                     </div>

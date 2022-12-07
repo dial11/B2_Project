@@ -1,0 +1,49 @@
+<h1 class="my-profile-title">프로필 수정</h1>
+<div class="my-profile">
+  <div class="my-profile-img">
+    <img alt="..." class="rounded" src="{{ url_for('static', filename='image/default_image.png') }}">
+    <div class="my-profile-img-button">
+      <input class="form-control-file" id="exampleFormControlFile1" type="file">
+      <button class="btn btn-primary btn-lg btn-block" type="submit">업로드</button>
+      <button class="btn btn-primary btn-lg btn-block btn-del" onclick="edit_user_post()">삭제</button>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="user-id">아이디</label>
+    <div class="col-sm-8">
+      <input class="form-control-plaintext" id="user-id" readonly type="text" value="{{session['id']}}">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label mt-4" for="user-name">이름</label>
+    <input class="form-control" id="user-name" type="text"/>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label mt-4" for="user-email">이메일</label>
+    <input class="form-control" id="user-email" type="text"/>
+  </div>
+
+  <form>
+    <div class="form-group">
+      <label class="form-label mt-4" for="user-desc">내 소개</label>
+      <textarea class="form-control" id="user-desc" rows="5"></textarea>
+    </div>
+  </form>
+
+  <div class="my-profile-pw-btn">
+    <div class="form-group">
+      <label class="form-label mt-4" for="password">비밀번호 확인</label>
+      <input class="form-control" id="user-pw-check" type="password"/>
+      <div class="invalid-feedback" id="check-msg"></div>
+    </div>
+    <div class="my-profile-button">
+      <button class="btn btn-primary btn-lg btn-block" type="submit">수정</button>
+      <button class="btn btn-primary btn-lg btn-block btn-can" onclick="history.back()">취소</button>
+    </div>
+  </div>
+
+</div>
+</div>

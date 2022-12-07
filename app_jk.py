@@ -22,9 +22,14 @@ def show_mypage():
     return render_template('index.html', component_name='mypage')
 
 
+# @app.route('/useredit')
+# def show_useredit():
+#     return render_template('index.html', component_name='useredit')
+
+
 @app.route('/logout', methods=['GET'])
 def logout():
-    session.pop('id', None)
+    session.clear()
     return redirect('/')
 
 
@@ -54,7 +59,6 @@ def get_category_list():
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
 
     db.commit()
-
 
     return json_str, 200
 
@@ -139,6 +143,10 @@ def get_boards(category, page):
     print(rows_board)
 
     json_str = json.dumps(rows_board, indent=4, sort_keys=True, default=str)
+
+    curs.execute('SELECT COUNT(*) FROM board')
+    total_num = curs.fetchall()
+    print(json.dumps(total_num))
 
     db.commit()
 
@@ -248,6 +256,86 @@ def post_board():
 
 
 # ----------------정지우님꺼 합친 부분
+
+
+# ----------------장빈님꺼 합친 부분
+
+# 마이페이지에서 로그인한 유저 게시글 불러오기
+@app.route('/user/post', methods=['GET'])
+def get_user_post():
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+    curs = db.cursor()
+
+    userId = session['id']
+
+    sql = '''SELECT  `title`, `content`, `created_at` FROM board WHERE user_id = %s;'''
+    curs.execute(sql, (userId))
+    rows_user = curs.fetchall()
+
+    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
+    return json_str, 200
+
+
+@app.route('/useredit')
+def useredit():
+    return render_template('useredit.html')
+
+# 마이페이지 수정(유저 정보 불러오기)
+@app.route('/user/edit', methods=['GET'])
+def edit_get_user():
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+    curs = db.cursor()
+
+    userId = session['id']
+
+    sql = '''SELECT  `name`, `email`, `description` FROM user WHERE id = %s;'''
+
+    curs.execute(sql, (userId))
+    rows_user = curs.fetchone()
+    print(rows_user)
+
+    return jsonify({'msg': rows_user})
+
+
+# 마이페이지 수정(유저 정보 수정하기)
+@app.route('/user/edit', methods=['PATCH'])
+def edit_user_post():
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+    curs = db.cursor()
+
+    userId = session['id']
+
+    sql = '''SELECT  `email`, `name`, `description` FROM user WHERE id = %s;'''
+
+    curs.execute(sql, (userId))
+    rows_user = curs.fetchall()
+    print(rows_user)
+
+    return jsonify({'msg': '!!.'})
+
+
+# ----------------장빈님꺼 합친 부분
 
 
 if __name__ == '__main__':
