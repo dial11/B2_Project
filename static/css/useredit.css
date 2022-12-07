@@ -1,42 +1,71 @@
+/* 사이드 */
 .column {
     min-width: 185px;
-  }
-  
-  .my-profile {
-    min-width: 600px;
-    height: 100%;
-    width: 100%;
-    padding: 10px;
-    background-color: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 2px 10px 0 rgb(0 0 0 / 15%);
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .my-profile-title {
-    font-size: 2em;
-    font-weight: bold;
-    padding-bottom: 0rem;
-  }
-  
-  .my-profile-id {
-    display: flex;
-  }
-  
-  .my-profile-sub {
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
+}
 
-  .btn.btn-primary.btn-lg.btn-block.btn-can {
-    color: #fff;
-    background-color: #ff1c1c;
-    border-color: #ff1c1c;
-  }
+/* 프로필 수정 타이틀 */
+.my-profile-title {
+  font-size: 2em;
+  font-weight: bold;
+  padding-bottom: 0rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+}
+
+/* 본문 */
+.my-profile {
+  min-width: 600px;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px 0 rgb(0 0 0 / 15%);
+  /* display: flex; */
+}
+
+/* 이미지 부분 정렬방식 */
+.my-profile-img {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+/* 이미지랑 버튼 위치 조정 */
+.my-profile-img-button {
+  margin-left: 2rem;
+}
+
+/* 이미지 업로드,삭제 */
+.btn.btn-primary.btn-lg.btn-block.btn-del {
+  color: #fff;
+  background-color: #ff1c1c;
+  border-color: #ff1c1c;
+}
+
+/* 아이디 폼 */
+.form-group.row {
+  margin-top: 1rem;
+}
+
+/* 아이디 폼 */
+.my-profile-pw-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* 프로필 수정,취소 */
+.btn.btn-primary.btn-lg.btn-block.btn-can {
+  color: #fff;
+  background-color: #ff1c1c;
+  border-color: #ff1c1c;
+}
+
+.my-profile-button {
+  margin-left: 30px;
+}
