@@ -13,9 +13,15 @@
   <link href="{{ url_for('static', filename='css/reset.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/category_list.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/mypage.css') }}" rel="stylesheet">
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+  <link href="{{ url_for('static', filename='css/mypage.css') }}" rel="stylesheet">
   <script src="{{ url_for('static', filename='js/mypage.js') }}"></script>
+
+<!--  <link href="{{ url_for('static', filename='css/useredit.css') }}" rel="stylesheet">-->
+<!--  <script src="{{ url_for('static', filename='js/useredit.js') }}"></script>-->
+
+<!--  <script src="{{ url_for('static', filename='js/board.js') }}"></script>-->
 
   <title>개발 is in</title>
 </head>
@@ -23,15 +29,19 @@
 {% include "components/header.html" %}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-2"> <!--[뉴스피드 분류]와 [나의 프로필]이 있는 column-->
+    <div class="col-2"> <!-- [뉴스피드 분류], [나의 프로필] -->
       {% include "components/category_list.html" %}
-      {% if session['id'] and component_name != 'mypage' %}
+      {% if session['id'] and component_name != 'mypage' and component_name != 'useredit' %}
       {% include "components/my_profile.html" %}
       {% endif %}
     </div>
-    <div class="col-10"> <!--[랜덤 프로필과 뉴스피드] 혹은 [마이 페이지]가 있는 column-->
+    <div class="col-10"> <!-- [랜덤 프로필 & 뉴스피드], [마이 페이지], [프로필 수정 페이지] -->
       {% if component_name == 'mypage' %}
       {% include "components/main_mypage.html" %}
+<!--      {% elif component_name == 'useredit' %}-->
+<!--      {% include "components/main_useredit.html" %}-->
+<!--      {% elif component_name == 'post' %}-->
+<!--      {% include "components/main_post.html" %}-->
       {% else %}
       {% include "components/random_profile.html" %}
         {% if component_name == 'category' %}
@@ -39,10 +49,10 @@
         {% else %}
         {% include "components/main.html" %}
         {% endif %}
-        <div class="d-flex justify-content-center" style="height: 32px; margin: 50px 0;"> <!-- 로딩 효과용 box -->
-          <div class="spinner-border" id="loading-icon" role="status"></div>
-          <div id="loading-message" style="display: none;">게시글이 없습니다. 새 게시글을 작성해주세요!</div>
-        </div>
+      <div class="d-flex justify-content-center" style="height: 32px; margin: 50px 0;"> <!-- 로딩 효과용 box -->
+        <div class="spinner-border" id="loading-icon" role="status"></div>
+        <div id="loading-message" style="display: none;">게시글이 없습니다. 새 게시글을 작성해주세요!</div>
+      </div>
       {% endif %}
     </div>
   </div>
