@@ -59,3 +59,25 @@ function edit_user_post() {
         },
     });
 }
+
+// 유저 이미지
+function user_img_post() {
+
+    let file = $('#file')[0].files[0]
+    //파일을 보낼려면 formdata에 실어서 보내야한다
+    let form_data = new FormData()
+
+    form_data.append("file_give", file)
+
+    $.ajax({
+        type: "POST",
+        url: "/user/edit",
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            alert(response["msg"])
+        }
+    });
+}

@@ -69,3 +69,8 @@
 .my-profile-button {
   margin-left: 30px;
 }
+
+.rounded {
+  height: 300px;
+  width: 300px;
+}
