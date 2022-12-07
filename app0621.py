@@ -343,11 +343,11 @@ def edit_get_user():
 
     userId = session['id']
 
-    sql = '''SELECT  `name`, `email`, `description` FROM user WHERE id = %s;'''
+    sql = '''SELECT `password`, `name`, `email`, `description`, `image` FROM user WHERE id = %s;'''
 
     curs.execute(sql, (userId))
     rows_user = curs.fetchone()
-    print(rows_user)
+    # print(rows_user)
 
     return jsonify({'msg': rows_user})
 
@@ -364,15 +364,43 @@ def edit_user_post():
     )
     curs = db.cursor()
 
+    eName_receive = request.form['eName_give']
+    eEmail_receive = request.form['eEmail_give']
+    eDesc_receive = request.form['eDesc_give']
+    ckpw_receive = request.form['ckpw_give']
     userId = session['id']
 
-    sql = '''SELECT  `email`, `name`, `description` FROM user WHERE id = %s;'''
+    sql = f'SELECT `password` FROM user WHERE id = "{userId}";'
 
-    curs.execute(sql, (userId))
-    rows_user = curs.fetchall()
-    print(rows_user)
+    curs.execute(sql)
+    pw = curs.fetchone()
+    pw = list(pw)
+    pw = pw[0]
 
-    return jsonify({'msg':'!!.'})
+    db.close()
+
+    if '@' not in eEmail_receive:
+        return jsonify({'msg':'이메일 형식이 아닙니다.'})
+    elif (ckpw_receive != pw):
+        return jsonify({'msg':'비밀번호가 틀려 정보를 수정하지 못했습니다.'})
+    else:
+        db = pymysql.connect(
+            user='project2b2',
+            password='project2b2',
+            host='182.212.65.173',
+            port=3306,
+            database='project2b2',
+            charset='utf8'
+        )
+        curs = db.cursor()
+
+        sql = f'UPDATE `project2b2`.`user` SET name="{eName_receive}",email="{eEmail_receive}",description="{eDesc_receive}" WHERE id="{userId}";'
+
+        curs.execute(sql)
+        db.commit()
+        db.close()
+
+        return jsonify({'msg':'정보가 수정되었습니다.'})
 
 ##########################################################################################################
 
