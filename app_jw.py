@@ -264,7 +264,7 @@ def user_login():
     # print(pw_check)
     # userName = request.form['name']
 
-    sql = f'select id,password,name,email from user where user.id = "{userId}"'
+    sql = f'select id,password,name,email,image,description from user where user.id = "{userId}"'
 
     curs.execute(sql)
     result = curs.fetchone()
@@ -285,6 +285,8 @@ def user_login():
             session['id'] = result[0]
             session['name'] = result[2]
             session['email'] = result[3]
+            session['image'] = result[4]
+            session['description'] = result[5]
             return jsonify({'msg': '로그인 성공'})
 
 # 게시글 등록하기
