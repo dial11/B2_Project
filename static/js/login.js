@@ -83,7 +83,7 @@ function user_login() {
     alert("빈칸을 채워주세요.");
     return;
   }
-
+  // console.log(userId, password);
   $.ajax({
     type: "POST",
     url: "/user/login",
