@@ -1,5 +1,6 @@
 // let myboard_id = '{{board_id}}' ;
 let gUser_name ="";
+let gUpdated_at = "";
 
 $(function() {
     showBoardone(myboard_id);
@@ -22,6 +23,8 @@ function showBoardone(board_id) {
             let mysession_name= "";
             console.log(board_list)
             gUser_name = board_list[0][3]
+            gUpdated_at = board_list[0][6]
+            mysession_name = board_list[1]
             for (let i = 0; i < 1; i++) {
                 let title = board_list[i][0]
                 let content = board_list[i][1]
@@ -31,12 +34,12 @@ function showBoardone(board_id) {
                 let category_name = board_list[i][4]
                 let board_id = board_list[i][5]
                 let updated_at = board_list[i][6]
-                mysession_name = board_list[1][0]
+                
                 {
                     let temp_html = `
                                         <div class="card" style="margin-bottom: 10px;">
                                             <span>${user_name}${category_name}</span>
-                                            <span style="text-align: right; font-size: 12px">(${updated_at})수정</span>
+                                            
                                             <div class="card-body">
                                                 <blockquote class="blockquote mb-0" style="height: 120px;">
                                                     <div style="margin-bottom: 10px;">
@@ -50,7 +53,15 @@ function showBoardone(board_id) {
                                     `
                     $('#board_user').prepend(temp_html)
                 }
-                
+                {
+                    if (gUpdated_at != null){
+                        let temp_html = `
+                        <span style="text-align: right; font-size: 12px">${gUpdated_at}수정됨</span>
+                        `
+                        $('#uptime').prepend(temp_html)
+                    }
+                   } 
+
             }
             {
                 let session_name = mysession_name;
