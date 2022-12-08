@@ -35,17 +35,19 @@ function showBoardone(board_id) {
                 let board_id = board_list[i][5]
                 let updated_at = board_list[i][6]
                 let user_image = board_list[i][7]
+                console.log(content)
                 {
                     let temp_html = `<div class = "car">
                                         <div style="display: flex; align-items: center;">
-                                            <img class="img-fluid rounded-start"
+                                            <img alt="이미지가 없습니다" class="img-fluid rounded-start"
                                                 src="../static/image/user/${user_image}"
-                                                style="height: 150px;">
+                                                style="height: 150px; margin: auto;">
                                         </div>
                                     </div>
                                         <div class="card" style="margin-bottom: 10px;">
                                             <div class="dodo">
-                                            <span>${user_name}    ${category_name}</span>
+                                            <p style="font-size: 20px; margin-bottom: 20px" >작성자: ${user_name}</p>
+                                            <p style="font-size: 16px;">카테고리: ${category_name}</p>
                                             </div>
                                             <div class="card-body">
                                                 <blockquote class="blockquote mb-0" style="height: 120px;">
