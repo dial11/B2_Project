@@ -38,8 +38,9 @@ function showBoardone(board_id) {
                 {
                     let temp_html = `
                                         <div class="card" style="margin-bottom: 10px;">
-                                            <span>${user_name}${category_name}</span>
-                                            
+                                            <div class="dodo">
+                                            <span>${user_name}    ${category_name}</span>
+                                            </div>
                                             <div class="card-body">
                                                 <blockquote class="blockquote mb-0" style="height: 120px;">
                                                     <div style="margin-bottom: 10px;">
@@ -68,7 +69,7 @@ function showBoardone(board_id) {
                 console.log(gUser_name, session_name)
                 if (session_name == gUser_name){
                     let temp_html = `
-                    <a type=button href = "/boardedit/${board_id}">글 수정</a> 
+                    <button type=button href = "/boardedit/${board_id}">글 수정</button> 
                     <button type= "button" onclick = "delboard(myboard_id)">글 삭제</button>
                     `
                     console.log(temp_html)

@@ -1,5 +1,5 @@
 .card-box {
-    display: flex;
+    display:flex ;
     flex-direction: column;
     position: relative;
     height: 100vh;
@@ -29,4 +29,22 @@ box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
 position: relative;
 -webkit-box-align: center;
 align-items: center;
+}
+
+.dodo {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 30px;
+}
+
+.uptimes {
+    margin-bottom: 30px;
+    margin-left: 80%;
+    
+}
+
+.col10 {
+    flex: 0 0 auto;
+    width: 80%;
+    height: auto;
 }
