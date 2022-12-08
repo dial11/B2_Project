@@ -89,7 +89,7 @@
 }
 
 /* 프로필 사진 사이즈 고정 */
-.rounded {
+.imgsize {
   height: 300px;
   width: 300px;
 }
