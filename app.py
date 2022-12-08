@@ -18,19 +18,19 @@ app.secret_key = '1221'
 
 @app.route('/')
 def show_main():
-    print('show_main')
+    # print('show_main')
     return render_template('index.html', component_name='main')
 
 
 @app.route('/category')
 def show_by_category():
-    print('show_category')
+    # print('show_category')
     return render_template('index.html', component_name='category')
 
 
-@app.route('/mypage')
-def show_mypage():
-    return render_template('index.html', component_name='mypage')
+# @app.route('/mypage')
+# def show_mypage():
+#     return render_template('index.html', component_name='mypage')
 
 
 # @app.route('/useredit')
@@ -40,13 +40,14 @@ def show_mypage():
 
 @app.route('/logout', methods=['GET'])
 def logout():
+    # print('logout')
     session.clear()
     return redirect('/')
 
 
 @app.route('/category-list', methods=['GET'])
 def get_category_list():
-    print('get_categories')
+    # print('get_categories')
     db = pymysql.connect(
         user='project2b2',
         password='project2b2',
@@ -64,10 +65,10 @@ def get_category_list():
         """
 
     curs.execute(sql)
-    rows_user = curs.fetchall()
-    print(rows_user)
+    rows_category = curs.fetchall()
+    # print(rows_category)
 
-    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
+    json_str = json.dumps(rows_category, indent=4, sort_keys=True, default=str)
 
     db.commit()
 
@@ -76,7 +77,7 @@ def get_category_list():
 
 @app.route('/user', methods=['GET'])
 def get_users():
-    print('get_users')
+    # print('get_users')
     db = pymysql.connect(
         user='project2b2',
         password='project2b2',
@@ -95,7 +96,7 @@ def get_users():
 
     curs.execute(sql)
     rows_user = curs.fetchall()
-    print(rows_user)
+    # print(rows_user)
 
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
 
@@ -122,9 +123,9 @@ def get_boards(category, page):
     startat = (page - 1) * perpage
 
     if category == 'all':
-        print('get_all_boards')
+        # print('get_all_boards')
         sql = f"""
-            SELECT b.title, b.content, b.created_at, u.name, u.image, c.name_en
+            SELECT b.id, b.title, b.content, b.created_at, b.updated_at, u.name, u.image, c.name_en
             FROM board b
             INNER JOIN `user` u
             ON b.user_id = u.id
@@ -135,9 +136,9 @@ def get_boards(category, page):
             OFFSET {startat}
             """
     else:
-        print(f'get_{category}_boards')
+        # print(f'get_{category}_boards')
         sql = f"""
-            SELECT b.title, b.content, b.created_at, u.name, u.image, c.name_en
+            SELECT b.id, b.title, b.content, b.created_at, b.updated_at u.name, u.image, c.name_en
             FROM board b
             INNER JOIN `user` u
             ON b.user_id = u.id
@@ -151,17 +152,18 @@ def get_boards(category, page):
 
     curs.execute(sql)
     rows_board = curs.fetchall()
-    print(rows_board)
+    # print(rows_board)
 
     json_str = json.dumps(rows_board, indent=4, sort_keys=True, default=str)
 
     curs.execute('SELECT COUNT(*) FROM board')
     total_num = curs.fetchall()
-    print(json.dumps(total_num))
+    # print(json.dumps(total_num))
 
     db.commit()
 
     return json_str, 200
+
 
 
 # ----------------정지우님꺼 합친 부분
