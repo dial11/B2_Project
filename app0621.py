@@ -47,11 +47,6 @@ def show_by_category():
     return render_template('index.html', component_name='category')
 
 
-@app.route('/mypage')
-def show_mypage():
-    return render_template('index.html', component_name='mypage')
-
-
 @app.route('/logout', methods=['GET'])
 def logout():
     session.clear()
@@ -335,6 +330,15 @@ def post_image():
     return jsonify({'url': url})
 
 ###################################################################################################
+@app.route('/useredit')
+def useredit():
+    return render_template('useredit.html')
+
+@app.route('/mypage')
+def mypage():
+    return render_template('mypage.html')
+
+
 
 # 마이페이지에서 로그인한 유저 게시글 불러오기
 @app.route('/user/post', methods=['GET'])
@@ -359,13 +363,6 @@ def get_user_post():
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
     return json_str, 200
 
-@app.route('/useredit')
-def useredit():
-    return render_template('useredit.html')
-
-@app.route('/mypage')
-def mypage():
-    return render_template('mypage.html')
 
 # 마이페이지 수정(유저 정보 불러오기)
 @app.route('/user/edit', methods=['GET'])
