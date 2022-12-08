@@ -634,7 +634,7 @@ def getBoard(board_id):
     curs = db.cursor()
 
     sql_board = f"""
-        SELECT b.title, b.content, b.created_at, u.name, c.name, b.id, b.updated_at
+        SELECT b.title, b.content, b.created_at, u.name, c.name, b.id, b.updated_at, b.data
         FROM board b
         INNER JOIN `user` u
         ON b.user_id = u.id
@@ -645,14 +645,15 @@ def getBoard(board_id):
         """
 
     curs.execute(sql_board)
-    rows_board = curs.fetchall()
+    rows_board = list(curs.fetchall())
+    rows_board.append(session["name"])
     print(rows_board)
 
     json_str = json.dumps(rows_board, indent=4, sort_keys=True, default=str, )
 
     db.commit()
     db.close()
-    return json_str, 200,
+    return json_str, 200
 
 
 @app.route('/board/delete', methods=['DELETE'])
@@ -662,17 +663,17 @@ def del_board():
                          db='project2b2', password='project2b2', charset='utf8')
     curs = db.cursor()
     board_id = request.form['board_id_give']
-    bid = int(board_id)
     sql_board = f"""
         DELETE FROM board
         WHERE id = 
-        """ + str(bid) + """
+        """ + str(board_id) + """
         """
 
     curs.execute(sql_board)
 
     db.commit()
     db.close()
+
     return jsonify({'result': 'success', 'msg': '삭제 완료!'})
 
 
