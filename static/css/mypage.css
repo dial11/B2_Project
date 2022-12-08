@@ -1,19 +1,28 @@
-.my-profile-title, .my-profile-board {
+.my-profile-title {
   margin-left: 40px;
   padding-top: 1rem;
   padding-bottom: 1.2rem;
   font-size: 2em;
   font-weight: bold;
-}
-
-.my-profile-board {
   padding-bottom: 1rem;
 }
 
-.my-profile-board-title {
+.my-profile-board {
+  padding-top: 1.2rem;
   padding-bottom: 1.2rem;
   font-weight: bold;
-  font-size: 1.3em;
+  font-size: 1.8em;
+}
+
+.my-profile-board-title {
+  padding-top: 1rem;
+  padding-bottom: 1.2rem;
+  font-weight: bold;
+  font-size: 1.8em;
+}
+
+.my-profile-board-content {
+  font-size: 1.4em;
 }
 
 .my-profile-board-datatime {

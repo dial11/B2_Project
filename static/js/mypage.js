@@ -16,9 +16,9 @@ function get_user_post() {
                 let time = board_list[i][2]
                 let temp_html = 
                 `
-                <div class="my-profile-board-box">
-                <div class="my-profile-board-tc">
+                <div class="my-profile-board-box" onclick="location.href='/bored'">
                     <h3 class="my-profile-board-title">제목: ${title}</h3>
+                <div class="my-profile-board-tc">
                     <div class="my-profile-board-content">${content}</div>
                 </div>
                 <div class="my-profile-board-datatime">${time}</div>
