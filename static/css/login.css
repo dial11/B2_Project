@@ -2,7 +2,6 @@
 
 /* 직접 */
 body {
-
   font-family: "Dokdo", cursive;
   font-family: "Gaegu", cursive;
   font-family: "Gamja Flower", cursive;
@@ -26,7 +25,6 @@ body {
 }
 
 .lg-button {
-
   text-align: center;
   /* padding-right: 3.5%; */
   margin: 0px 0px 0px 7%;
@@ -49,9 +47,7 @@ header .inner {
   align-items: center;
 }
 
-
 header .login-button {
-
   height: 65px;
   width: 100px;
 }
@@ -62,7 +58,6 @@ header .login-button {
   border-radius: 20px;
   float: right;
 }
-
 
 .login-button:hover {
   background-color: #4285f4;
@@ -85,7 +80,6 @@ body {
 
 .overlay,
 .form-panel.one:before {
-
   position: absolute;
   top: 0;
   left: 0;
@@ -221,7 +215,6 @@ body {
 }
 
 .form-group .form-remember input[type="checkbox"] {
-
   display: inline-block;
   width: auto;
   margin: 0 10px 0 0;
@@ -236,7 +229,6 @@ body {
   box-sizing: border-box;
 }
 .form-panel.one:before {
-
   content: "";
 
   display: block;
@@ -285,7 +277,6 @@ body {
 
 .form-panel.two:hover:before,
 .form-panel.two:hover:after {
-
   opacity: 0;
 }
 .form-panel.two.active {
@@ -296,7 +287,6 @@ body {
 
 .form-panel.two.active:before,
 .form-panel.two.active:after {
-
   opacity: 0;
 }
 .form-header {
@@ -327,7 +317,6 @@ body {
   text-decoration: none;
 
   text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.1);
-
 }
 .pen-footer a .material-icons {
   width: 12px;
@@ -338,4 +327,12 @@ body {
 .cp-fab {
   background: #fff !important;
   color: #4285f4 !important;
+}
+
+.top-margin {
+  margin-top: 5%;
+}
+
+.find {
+  margin-left: 35%;
 }

@@ -341,6 +341,94 @@ def post_image():
     url = "static/image/post/" + f.filename
     return jsonify({'url': url})
 
+# 아이디찾기-----------------------------------------------------
+
+
+@app.route('/find/id', methods=['POST'])
+def findId():
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+    curs = db.cursor()
+
+    email = request.form['email']
+    # print(email, 2)
+
+    sql_check = f'select id from `user` where email = "{email}" '
+
+    curs.execute(sql_check)
+    result = curs.fetchone()
+
+    db.commit()
+    db.close()
+
+    if result is None:
+        return jsonify({'msg': '회원이 아닙니다.'})
+
+    return jsonify({'msg': result[0]})
+# 회원탈퇴-----------------------------------------------------
+
+
+@app.route('/delete/user', methods=['POST'])
+def deleteUser():
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+    curs = db.cursor()
+
+    idf = request.form['idf']
+    pwf = request.form['pwf']
+    byte_input = pwf.encode('UTF-8')
+    # print(idf, pwf, 2)
+
+    sql_check = f'select password from `user` where id = "{idf}" '
+
+    curs.execute(sql_check)
+    print(sql_check)
+    result = curs.fetchone()
+    print(result)
+    if result is None:
+        return jsonify({'msg': '회원이 아닙니다.'})
+
+    origin_pw = bytes.fromhex(result[0])
+    pw_check = bcrypt.checkpw(byte_input, origin_pw)
+    db.commit()
+    db.close()
+
+    if pw_check is None:
+        return jsonify({'msg': '회원이 아닙니다.'})
+
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+    curs = db.cursor()
+
+    idf = request.form['idf']
+    pwf = request.form['pwf']
+
+    sql_check = f'delete from `user` where id = "{idf}" '
+
+    curs.execute(sql_check)
+    db.commit()
+    db.close()
+
+    return jsonify({'msg': '회원탈퇴가 되었습니다.'})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

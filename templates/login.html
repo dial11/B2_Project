@@ -74,33 +74,37 @@
                 required="required"
               />
             </div>
-            <!-- 아이디저장과 아이디패스워드찾기 -->
+            <!-- 아이디저장과 아이디찾기,패스워드변경 여기까지 -->
             <div class="box">
               <span class="input-wrap">
                 <input type="checkbox" id="checkId" name="checkId" />
                 <label for="checkId"><span></span></label>
                 아이디 저장
               </span>
-              <!-- <ul class="find">
-                <li
+              <span class="find">
+                <span
                   class="idSearch"
                   id="idSearch"
                   style="cursor: hand; cursor: pointer"
+                  onclick="findId()"
                 >
-                  아이디 찾기
-                </li>
-                <li
+                  아이디 찾기 |
+                </span>
+                <span
                   class="pwSearch"
                   id="pwSearch"
                   style="cursor: hand; cursor: pointer"
+                  onclick="deleteUser()"
                 >
-                  비밀번호 찾기
-                </li>
-              </ul> -->
+                  회원탈퇴
+                </span>
+              </span>
             </div>
-            <!-- 아이디저장과 아이디패스워드찾기 여기까지-->
+            <!-- 아이디저장과 아이디찾기,패스워드변경 여기까지-->
             <div class="form-group">
-              <button type="button" onclick="user_login()">Log In</button>
+              <button type="button" class="top-margin" onclick="user_login()">
+                Log In
+              </button>
             </div>
           </form>
         </div>

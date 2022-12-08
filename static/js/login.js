@@ -107,6 +107,70 @@ function user_login() {
   });
 }
 
+// 아이디찾기 ------------------------------------------------------
+function findId() {
+  let find_email = prompt("이메일을 입력하세요");
+
+  if (find_email === "") {
+    alert("빈칸을 채워주세요.");
+    return findId();
+  }
+
+  $.ajax({
+    type: "POST",
+    url: "/find/id",
+    data: {
+      email: find_email,
+    },
+    success: function (response) {
+      if (response["msg"] == "회원이 아닙니다.") {
+        alert(response["msg"]);
+        return;
+      }
+      alert(response["msg"]);
+      window.location.href = "/login";
+    },
+  });
+}
+
+// 회원탈퇴 ------------------------------------------------------
+function deleteUser() {
+  let find_id = prompt("아이디를 입력하세요");
+  let find_pw;
+
+  if (find_id === "") {
+    alert("빈칸을 채워주세요.");
+    return deleteUser();
+  } else {
+    find_pw = prompt("비밀번호를 입력하세요");
+
+    if (find_pw === "") {
+      alert("빈칸을 채워주세요.");
+      return deleteUser();
+    }
+    console.log(find_id, find_pw, 0);
+  }
+  console.log(find_id, 2);
+  console.log(find_id, find_pw, 1);
+
+  $.ajax({
+    type: "POST",
+    url: "/delete/user",
+    data: {
+      idf: find_id,
+      pwf: find_pw,
+    },
+    success: function (response) {
+      if (response["msg"] == "회원이 아닙니다.") {
+        alert(response["msg"]);
+        return;
+      }
+      alert(response["msg"]);
+      window.location.href = "/login";
+    },
+  });
+}
+
 // 아이디저장(쿠키사용)------------------------------------------------------------------------------
 $(document).ready(function () {
   // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
