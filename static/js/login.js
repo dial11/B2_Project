@@ -158,7 +158,7 @@ function deleteUser() {
     url: "/delete/user",
     data: {
       idf: find_id,
-      pwf: find_pw,
+      pwf: find_pw
     },
     success: function (response) {
       if (response["msg"] == "회원이 아닙니다.") {
