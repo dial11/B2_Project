@@ -25,15 +25,16 @@ function showRandomUser() {
       let rand_num_list = pickThreeNum(user_list.length)
       for (let i = 0; i < 3; i++) {
         let rand_num = rand_num_list[i];
-        let name = user_list[rand_num][2]
-        let description = user_list[rand_num][3]
+        let name = user_list[rand_num][3]
+        let image = user_list[rand_num][4]
+        let description = user_list[rand_num][5]
         let temp_html = `
                                 <div class="card mb-3">
                                     <a href="">
                                     <div class="row g-0">
                                         <div class="col-md-3">
                                             <img alt="이미지가 없습니다" class="img-fluid rounded-start" style="height: 70px;"
-                                                 src="/static/image/default_image.png">
+                                                 src="../static/image/user/${image}">
                                         </div>
                                         <div class="col-md-9">
                                             <div class="card-body">
@@ -96,12 +97,13 @@ function showBoard(category, page, have_to_reset) {
         let content = board_list[i][1]
         let time = board_list[i][2]
         let user_name = board_list[i][3]
+        let user_image = board_list[i][4]
         let temp_html = `
                                 <div>
                                     <div style="display: flex; align-items: center;">
                                         <div style="display: flex; align-items: center; cursor: pointer;"  onclick="location.href=''">
                                             <img alt="이미지가 없습니다" class="img-fluid rounded-start"
-                                                 src="/static/image/default_image.png"
+                                                 src="../static/image/user/${user_image}"
                                                  style="height: 40px; margin-right: 10px;">
                                             <span>${user_name}</span> 
                                         </div>

@@ -78,7 +78,7 @@ def get_users():
     curs = db.cursor()
 
     sql = """
-        SELECT u.email, u.password, u.name, u.description
+        SELECT u.id, u.email, u.password, u.name, u.image, u.description
         FROM user u
         """
 
@@ -113,7 +113,7 @@ def get_boards(category, page):
     if category == 'all':
         print('get_all_boards')
         sql = f"""
-            SELECT b.title, b.content, b.created_at, u.name, c.name_en
+            SELECT b.title, b.content, b.created_at, u.name, u.image, c.name_en
             FROM board b
             INNER JOIN `user` u
             ON b.user_id = u.id
@@ -126,7 +126,7 @@ def get_boards(category, page):
     else:
         print(f'get_{category}_boards')
         sql = f"""
-            SELECT b.title, b.content, b.created_at, u.name, c.name_en
+            SELECT b.title, b.content, b.created_at, u.name, u.image, c.name_en
             FROM board b
             INNER JOIN `user` u
             ON b.user_id = u.id
@@ -209,7 +209,7 @@ def user_login():
     password = request.form['password']
     # userName = request.form['name']
 
-    sql = f'select id,password,name,email from user where user.id = {userId}'
+    sql = f'select id,password,name,email,image,description from user where user.id = "{userId}"'
 
     curs.execute(sql)
     result = curs.fetchone()
@@ -226,12 +226,11 @@ def user_login():
             return jsonify({'msg': '비밀번호가 일치하지 않습니다.'})
 
         else:
-            # sql = f'select id,name,email from user where user.id = {userId}'
-            # #나중수정
-            print(result)
-            session['id'] = userId
+            session['id'] = result[0]
             session['name'] = result[2]
             session['email'] = result[3]
+            session['image'] = result[4]
+            session['description'] = result[5]
             return jsonify({'msg': '로그인 성공'})
 
 
