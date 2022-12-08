@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt
+import bcrypt
 # from sqlalchemy import create_engine, text
-import pymysql
-import os
-import flash
 import json
+import flash
+import os
+import pymysql
 
 UPLOAD_FOLDER = 'static/image/post'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -230,10 +231,12 @@ def save_user():
 
     userId = request.form['id']
     password = request.form['password']
-    hash = bcrypt.generate_password_hash(password).decode('utf-8')
+    # 입력된 비밀번호를 바이트 코드로 변환
+    byte_input = password.encode('UTF-8')
+    hash = bcrypt.hashpw(byte_input, bcrypt.gensalt()).hex()
     userName = request.form['name']
     email = request.form['email']
-    print(hash)
+    # print(hash)
 
     sql = f'INSERT INTO `user` (id, password, name, email) VALUES("{userId}", "{hash}", "{userName}", "{email}");'
 
@@ -259,7 +262,11 @@ def user_login():
 
     userId = request.form['id']
     password = request.form['password']
-    hash = bcrypt.generate_password_hash(password).decode('utf-8')
+
+    # 입력된 비밀번호를 바이트 코드로 변환
+    byte_input = password.encode('UTF-8')
+
+    # hash = bcrypt.hashpw(password.decode('utf-8'), bcrypt.gensalt())
     # print(pw_check)
     # userName = request.form['name']
 
@@ -268,7 +275,10 @@ def user_login():
     curs.execute(sql)
     result = curs.fetchone()
     list_result = list(result)
-    pw_check = bcrypt.check_password_hash(hash, list_result[1])
+    # 기존 저장된 값을 연산을 위해 hex에서 바이트로 변경
+    origin_pw = bytes.fromhex(list_result[1])
+    pw_check = bcrypt.checkpw(byte_input, origin_pw)
+    # pw_check = bcrypt.check_password_hash(hash, list_result[1])
     # print(list_result[1])
     db.commit()  # 삽입,삭제,수정할때, 최종적으로 데이터베이스를 만져줄때만
     db.close()
