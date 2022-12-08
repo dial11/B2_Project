@@ -3,13 +3,16 @@
     <h2>전체 뉴스피드</h2>
     <nav>
 <!--      <a href="">페이지 형식 보기</a>-->
+      {% if session['id'] %}
       <a href="{{url_for('post')}}">글쓰기</a>
+      {% else %}
+      {% endif %}
     </nav>
   </div>
   <div id="all-board-list">
     <div style="display: flex; align-items: center;">
       <img alt="이미지가 없습니다" class="img-fluid rounded-start"
-           src="/static/image/default_image.png"
+           src="../static/image/user/${image}"
            style="height: 40px;">
       <span>{user_name}</span>
     </div>

@@ -12,10 +12,11 @@
       </div>
       <div class="items-body">
         <img alt="이미지가 없습니다" class="card-img-top"
-             src="{{ url_for('static', filename='image/default_image.png') }}">
+             src="../static/image/user/{{session['image']}}">
         <div class="card-body">
-          <h5 class="card-title">{{session['id']}}</h5>
-          <p class="card-text" style="margin-bottom: 10px;">{{session['description']}}</p>
+          <p class="card-title">{{session['name']}}</p>
+          <p style="font-size: 12px;" class="card-title">({{session['id']}})</p>
+          <p class="card-text" style="margin: 10px 0;">{{session['description']}}</p>
           <a class="btn btn-primary" href="/mypage">자세히 보기</a>
         </div>
       </div>
