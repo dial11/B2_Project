@@ -15,6 +15,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.secret_key = '1221'
 
+
 @app.route('/')
 def show_main():
     return render_template('index.html', component_name='main')
@@ -56,6 +57,7 @@ def get_category_list():
     db.commit()
 
     return json_str, 200
+
 
 @app.route('/user', methods=['GET'])
 def get_users():
@@ -263,6 +265,7 @@ def user_login():
             session['description'] = result[5]
             return jsonify({'msg': '로그인 성공'})
 
+
 # 게시글 등록하기
 @app.route('/write', methods=['POST'])
 def post_board():
@@ -291,6 +294,7 @@ def post_board():
 
     return redirect('/')
 
+
 # 게시판글쓰기 이미지경로
 @app.route('/post/image', methods=['POST'])
 def post_image():
@@ -298,6 +302,7 @@ def post_image():
     f.save('static/image/post/' + f.filename)
     url = "static/image/post/" + f.filename
     return jsonify({'url': url})
+
 
 # 아이디찾기-----------------------------------------------------
 @app.route('/find/id', methods=['POST'])
@@ -326,6 +331,7 @@ def findId():
         return jsonify({'msg': '회원이 아닙니다.'})
 
     return jsonify({'msg': result[0]})
+
 
 # 회원탈퇴-----------------------------------------------------
 @app.route('/delete/user', methods=['POST'])
@@ -379,6 +385,8 @@ def deleteUser():
     db.close()
 
     return jsonify({'msg': '회원탈퇴가 되었습니다.'})
+
+
 # ----------------정지우님꺼 합친 부분
 
 
@@ -416,6 +424,7 @@ def get_user_post():
 
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
     return json_str, 200
+
 
 # 마이페이지 수정(유저 정보 불러오기)
 @app.route('/user/edit', methods=['GET'])
@@ -477,6 +486,7 @@ def user_img_post():
 
     return jsonify({'msg': '업로드 되었습니다.'})
 
+
 # 마이페이지 이미지 삭제
 @app.route('/user/edit', methods=['DELETE'])
 def user_img_del():
@@ -500,6 +510,7 @@ def user_img_del():
     db.close()
 
     return jsonify({'msg': '프로필 이미지가 삭제되었습니다.'})
+
 
 # 마이페이지 수정(유저 정보 수정하기)
 @app.route('/user/edit', methods=['PATCH'])
@@ -558,6 +569,8 @@ def edit_user_post():
         db.close()
 
         return jsonify({'msg': '정보가 수정되었습니다.'})
+
+
 # ----------------장빈님꺼 합친 부분
 
 
@@ -566,10 +579,11 @@ def edit_user_post():
 def boardout(board_id):
     return render_template('board.html', board_id=board_id)
 
+
 @app.route('/board/<int:board_id>/data')
 def getBoard(board_id):
     db = pymysql.connect(host='182.212.65.173', user='project2b2',
-                        db='project2b2', password='project2b2', charset='utf8')
+                         db='project2b2', password='project2b2', charset='utf8')
     curs = db.cursor()
 
     sql_board = f"""
@@ -597,7 +611,7 @@ def getBoard(board_id):
 @app.route('/board/delete', methods=['DELETE'])
 def del_board():
     db = pymysql.connect(host='182.212.65.173', user='project2b2',
-                        db='project2b2', password='project2b2', charset='utf8')
+                         db='project2b2', password='project2b2', charset='utf8')
     curs = db.cursor()
     board_id = request.form['board_id_give']
     sql_board = f"""
@@ -613,14 +627,16 @@ def del_board():
 
     return jsonify({'result': 'success', 'msg': '삭제 완료!'})
 
+
 @app.route('/boardedit/<int:board_id>')
 def editBoards(board_id):
     return render_template('boardedit.html', board_id=board_id)
 
+
 @app.route('/boardedit/<int:board_id>/re', methods=["GET"])
 def editBoard(board_id):
     db = pymysql.connect(host='182.212.65.173', user='project2b2',
-                        db='project2b2', password='project2b2', charset='utf8')
+                         db='project2b2', password='project2b2', charset='utf8')
     curs = db.cursor()
 
     sql_board = f"""
@@ -643,7 +659,7 @@ def editBoard(board_id):
 @app.route('/boardedit/<int:board_id>/post', methods=['PATCH'])
 def postBoard(board_id):
     db = pymysql.connect(host='182.212.65.173', user='project2b2',
-                        db='project2b2', password='project2b2', charset='utf8')
+                         db='project2b2', password='project2b2', charset='utf8')
     curs = db.cursor()
 
     selectPost = request.form['category_id']
@@ -662,6 +678,8 @@ def postBoard(board_id):
     db.close()
 
     return jsonify({'result': 'success', 'msg': '수정 완료!'})
+
+
 # ----------------변준혁님꺼 합친 부분
 
 if __name__ == '__main__':

@@ -40,7 +40,7 @@ function showBoardone(board_id) {
                                         <div style="display: flex; align-items: center;">
                                             <img class="img-fluid rounded-start"
                                                 src="../static/image/user/${user_image}"
-                                                style="height: 500px;">
+                                                style="height: 150px;">
                                         </div>
                                     </div>
                                         <div class="card" style="margin-bottom: 10px;">
