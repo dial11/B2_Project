@@ -8,6 +8,7 @@ $(document).ready(function () {
   showRandomUser();
   if (window.location.search.substring(2) !== '') {
     category_state = window.location.search.substring(2)
+
     $('#category-title').text(`${category_state.toUpperCase()} 뉴스피드`)
   }
   showBoard(category_state, 1, 1);
@@ -168,10 +169,9 @@ $(window).scroll(function () {
     icon.style.display = 'block'
     message.style.display = 'none'
   }
-  if ((window.innerHeight + window.scrollY + 132) >= document.body.offsetHeight) {
+  if ((window.innerHeight + window.scrollY + 1) >= document.body.offsetHeight) {
     setTimeout(function () {
       showBoard(category_state, ++page_state, 0);
-      // console.log('page_state:', category_state, page_state);
       icon.style.display = 'none'
     }, 500)
   }
