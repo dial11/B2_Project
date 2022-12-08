@@ -15,13 +15,14 @@
   <link href="{{ url_for('static', filename='css/category.css') }}" rel="stylesheet">
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
-  <link href="{{ url_for('static', filename='css/mypage.css') }}" rel="stylesheet">
-  <script src="{{ url_for('static', filename='js/mypage.js') }}"></script>
+<!--  <link href="{{ url_for('static', filename='css/mypage.css') }}" rel="stylesheet">-->
+<!--  <script src="{{ url_for('static', filename='js/mypage.js') }}"></script>-->
 
-  <!--  <link href="{{ url_for('static', filename='css/useredit.css') }}" rel="stylesheet">-->
-  <!--  <script src="{{ url_for('static', filename='js/useredit.js') }}"></script>-->
+<!--    <link href="{{ url_for('static', filename='css/useredit.css') }}" rel="stylesheet">-->
+<!--    <script src="{{ url_for('static', filename='js/useredit.js') }}"></script>-->
 
-  <!--  <script src="{{ url_for('static', filename='js/board.js') }}"></script>-->
+<!--    <link href="{{ url_for('static', filename='css/board.css') }}" rel="stylesheet">-->
+<!--    <script src="{{ url_for('static', filename='js/board.js') }}"></script>-->
 
   <title>개발 is in</title>
 </head>
@@ -36,13 +37,13 @@
       {% endif %}
     </div>
     <div class="col-10"> <!-- [랜덤 프로필 & 뉴스피드], [마이 페이지], [프로필 수정 페이지] -->
-      {% if component_name == 'mypage' %}
-      {% include "components/main_mypage.html" %}
-      <!--      {% elif component_name == 'useredit' %}-->
-      <!--      {% include "components/main_useredit.html" %}-->
-      <!--      {% elif component_name == 'post' %}-->
-      <!--      {% include "components/main_post.html" %}-->
-      {% else %}
+<!--      {% if component_name == 'mypage' %}-->
+<!--      {% include "components/main_mypage.html" %}-->
+<!--      &lt;!&ndash;      {% elif component_name == 'useredit' %}&ndash;&gt;-->
+<!--      &lt;!&ndash;      {% include "components/main_useredit.html" %}&ndash;&gt;-->
+<!--      &lt;!&ndash;      {% elif component_name == 'post' %}&ndash;&gt;-->
+<!--      &lt;!&ndash;      {% include "components/main_post.html" %}&ndash;&gt;-->
+<!--      {% else %}-->
       {% include "components/random_profile.html" %}
       {% if component_name == 'category' %}
       {% include "components/main_category.html" %}
@@ -53,7 +54,7 @@
         <div class="spinner-border" id="loading-icon" role="status"></div>
         <div id="loading-message" style="display: none;">게시글이 없습니다. 새 게시글을 작성해주세요!</div>
       </div>
-      {% endif %}
+<!--      {% endif %}-->
     </div>
   </div>
 </div>
