@@ -37,9 +37,9 @@ function showRandomUser() {
                                                  src="../static/image/user/${image}">
                                         </div>
                                         <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title">${name}</h5>
-                                                <p class="card-text">${description}</p>
+                                            <div class="card-body" style="  height: 72px;">
+                                                <h5 class="card-title" style="font-size: 18px;">${name}</h5>
+                                                <p class="card-text short-description">${description}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -93,26 +93,30 @@ function showBoard(category, page, have_to_reset) {
         document.getElementById('loading-message').style.display = 'block'
       }
       for (let i = 0; i < board_list.length; i++) {
-        let name = board_list[i][0]
-        let content = board_list[i][1]
-        let time = board_list[i][2]
-        let user_name = board_list[i][3]
-        let user_image = board_list[i][4]
-        let temp_html = `
+        let id = board_list[i][0]
+        let name = board_list[i][1]
+        let content = board_list[i][2]
+        let time = board_list[i][3]
+        let time_updated = board_list[i][4]
+        let user_name = board_list[i][5]
+        let user_image = board_list[i][6]
+        let temp_html = ``
+        if (time_updated === null) {
+          temp_html = `
                                 <div>
                                     <div style="display: flex; align-items: center;">
                                         <div style="display: flex; align-items: center; cursor: pointer;"  onclick="location.href=''">
                                             <img alt="이미지가 없습니다" class="img-fluid rounded-start"
                                                  src="../static/image/user/${user_image}"
                                                  style="height: 40px; margin-right: 10px;">
-                                            <span>${user_name}</span> 
+                                            <span>${user_name}</span>
                                         </div>
                                     </div>
-                                    <div class="card" style="margin-bottom: 10px; cursor: pointer;"  onclick="location.href=''">
+                                    <div class="card" style="margin-bottom: 10px; cursor: pointer;"  onclick="location.href='/board/${id}'">
                                         <div class="card-body">
                                             <blockquote class="blockquote mb-0" style=" overflow: hidden; height: 200px;">
                                                 <div style="margin-bottom: 10px;">
-                                                    <span>${name}</span> 
+                                                    <span>${name}</span>
                                                     <span style="text-align: right; font-size: 12px">(${time})</span>
                                                 </div>
                                                 <p class="board-content">${content}</p>
@@ -121,6 +125,31 @@ function showBoard(category, page, have_to_reset) {
                                     </div>
                                 </div>
                                 `
+        } else {
+          temp_html = `
+                                <div>
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="display: flex; align-items: center; cursor: pointer;"  onclick="location.href=''">
+                                            <img alt="이미지가 없습니다" class="img-fluid rounded-start"
+                                                 src="../static/image/user/${user_image}"
+                                                 style="height: 40px; margin-right: 10px;">
+                                            <span>${user_name}</span>
+                                        </div>
+                                    </div>
+                                    <div class="card" style="margin-bottom: 10px; cursor: pointer;"  onclick="location.href='/board/${id}'">
+                                        <div class="card-body">
+                                            <blockquote class="blockquote mb-0" style=" overflow: hidden; height: 200px;">
+                                                <div style="margin-bottom: 10px;">
+                                                    <span>${name}</span>
+                                                    <span style="text-align: right; font-size: 12px">(${time_updated}(수정됨))</span>
+                                                </div>
+                                                <p class="board-content">${content}</p>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                                `
+        }
         if (category !== 'all') {
           $('#category-board-list').append(temp_html)
         } else {
