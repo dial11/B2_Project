@@ -9,14 +9,12 @@ function edit_get_user() {
         url: "/user/edit",
         data: {},
         success: function (response) {
-            // console.log(response)
             let rows = response["msg"];
             let pw = rows[0];
             let name = rows[1];
             let email = rows[2];
             let desc = rows[3];
             let img = rows[4];
-            // console.log(pw, name, email, desc, img)
 
             $('input[name=value_name]').attr('value',name);
             $('input[name=value_email]').attr('value',email);
@@ -27,7 +25,6 @@ function edit_get_user() {
                 <textarea class="form-control" id="edit-desc" rows="5">${desc}</textarea>
             </div>
             `;
-            
             $("#form-user-desc").append(temp_html);
         },
     });

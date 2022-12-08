@@ -12,6 +12,7 @@
 
     <link href="{{ url_for('static', filename='css/reset.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/category.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/useredit.css') }}" rel="stylesheet">
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/useredit.js') }}"></script>
@@ -23,9 +24,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-2">
-      <div class="column">
-        {% include "components/category_list.html" %}
-      </div>
+      {% include "components/category_list.html" %}
     </div>
     <div class="col-10">
       <h1 class="my-profile-title">프로필 수정</h1>

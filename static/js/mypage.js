@@ -3,27 +3,17 @@ $(document).ready(function () {
 });
 
 function get_user_post() {
-     $.ajax({
+    $.ajax({
         type: "GET",
         url: "/user/post",
         data: {},
         success: function (response) {
-            // console.log(response);
-            // alert(response['msg']);
+            console.log(response);
             let board_list = JSON.parse(response)
-            // if (board_list.length < 4) {
-            //     document.getElementById('loading-icon').style.display = 'none'
-            //     document.getElementById('loading-message').style.display = 'block'
-            // }
-            // console.log(board_list)
             for (let i = 0; i < board_list.length; i++) {
-                // console.log(board_list[i][0])
                 let title = board_list[i][0]
                 let content = board_list[i][1]
                 let time = board_list[i][2]
-
-                console.log(title, content, time)
-
                 let temp_html = 
                 `
                 <div class="my-profile-board-box">
@@ -34,7 +24,6 @@ function get_user_post() {
                 <div class="my-profile-board-datatime">${time}</div>
                 </div>
                 `;
-
                 $("#my-profile-board").append(temp_html);
             }
         }
