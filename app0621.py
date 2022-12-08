@@ -1,19 +1,17 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from werkzeug.utils import secure_filename
-from flask_bcrypt import Bcrypt
-# from sqlalchemy import create_engine, text
 from datetime import datetime
-import pymysql
-import os
-import flash
+import bcrypt
 import json
+import flash
+import os
+import pymysql
 
 UPLOAD_FOLDER = 'static/image/post'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-bcrypt = Bcrypt(app)
 
 app.secret_key = '1221'
 
@@ -39,12 +37,19 @@ curs = db.cursor()
 
 @app.route('/')
 def show_main():
+    #print('show_main')
     return render_template('index.html', component_name='main')
 
 
 @app.route('/category')
 def show_by_category():
+    #print('show_category')
     return render_template('index.html', component_name='category')
+
+
+# @app.route('/useredit')
+# def show_useredit():
+#     return render_template('index.html', component_name='useredit')
 
 
 @app.route('/logout', methods=['GET'])
@@ -55,6 +60,7 @@ def logout():
 
 @app.route('/category-list', methods=['GET'])
 def get_category_list():
+    #print('get_categories')
     db = pymysql.connect(
         user='project2b2',
         password='project2b2',
@@ -73,6 +79,7 @@ def get_category_list():
 
     curs.execute(sql)
     rows_user = curs.fetchall()
+    #print(rows_user)
 
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
 
@@ -83,6 +90,7 @@ def get_category_list():
 
 @app.route('/user', methods=['GET'])
 def get_users():
+    #print('get_users')
     db = pymysql.connect(
         user='project2b2',
         password='project2b2',
@@ -95,12 +103,13 @@ def get_users():
     curs = db.cursor()
 
     sql = """
-        SELECT u.email, u.password, u.name, u.description
+        SELECT u.id, u.email, u.password, u.name, u.image, u.description
         FROM user u
         """
 
     curs.execute(sql)
     rows_user = curs.fetchall()
+    #print(rows_user)
 
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
 
@@ -127,8 +136,9 @@ def get_boards(category, page):
     startat = (page - 1) * perpage
 
     if category == 'all':
+        #print('get_all_boards')
         sql = f"""
-            SELECT b.title, b.content, b.created_at, u.name, c.name_en
+            SELECT b.title, b.content, b.created_at, u.name, u.image, c.name_en
             FROM board b
             INNER JOIN `user` u
             ON b.user_id = u.id
@@ -139,8 +149,9 @@ def get_boards(category, page):
             OFFSET {startat}
             """
     else:
+        #print(f'get_{category}_boards')
         sql = f"""
-            SELECT b.title, b.content, b.created_at, u.name, c.name_en
+            SELECT b.title, b.content, b.created_at, u.name, u.image, c.name_en
             FROM board b
             INNER JOIN `user` u
             ON b.user_id = u.id
@@ -154,8 +165,13 @@ def get_boards(category, page):
 
     curs.execute(sql)
     rows_board = curs.fetchall()
+    #print(rows_board)
 
     json_str = json.dumps(rows_board, indent=4, sort_keys=True, default=str)
+
+    curs.execute('SELECT COUNT(*) FROM board')
+    total_num = curs.fetchall()
+    #print(json.dumps(total_num))
 
     db.commit()
 
@@ -226,10 +242,12 @@ def save_user():
 
     userId = request.form['id']
     password = request.form['password']
-    hash = bcrypt.generate_password_hash(password).decode('utf-8')
+    # 입력된 비밀번호를 바이트 코드로 변환
+    byte_input = password.encode('UTF-8')
+    hash = bcrypt.hashpw(byte_input, bcrypt.gensalt()).hex()
     userName = request.form['name']
     email = request.form['email']
-    print(hash)
+    # #print(hash)
 
     sql = f'INSERT INTO `user` (id, password, name, email) VALUES("{userId}", "{hash}", "{userName}", "{email}");'
 
@@ -255,22 +273,29 @@ def user_login():
 
     userId = request.form['id']
     password = request.form['password']
-    hash = bcrypt.generate_password_hash(password).decode('utf-8')
-    pw_check = bcrypt.check_password_hash(hash, password)
-    # print(pw_check)
+
+    # 입력된 비밀번호를 바이트 코드로 변환
+    byte_input = password.encode('UTF-8')
+
+    # hash = bcrypt.hashpw(password.decode('utf-8'), bcrypt.gensalt())
+    # #print(pw_check)
     # userName = request.form['name']
 
     sql = f'select id,password,name,email,image,description from user where user.id = "{userId}"'
 
     curs.execute(sql)
     result = curs.fetchone()
-    print(result)
+    list_result = list(result)
+    # 기존 저장된 값을 연산을 위해 hex에서 바이트로 변경
+    origin_pw = bytes.fromhex(list_result[1])
+    pw_check = bcrypt.checkpw(byte_input, origin_pw)
+    # pw_check = bcrypt.check_password_hash(hash, list_result[1])
+    # #print(list_result[1])
     db.commit()  # 삽입,삭제,수정할때, 최종적으로 데이터베이스를 만져줄때만
     db.close()
-    # print(result)
 
     if result is None:
-        # print('none')
+        # #print('none')
         return jsonify({'msg': '회원이 아닙니다.'})
 
     else:
@@ -306,7 +331,7 @@ def post_board():
     userId = session['id']
     # postFile = request.form['data']
     # userName = request.form['name']
-    # print(selectPost, postTitle, postContent, userId)
+    # #print(selectPost, postTitle, postContent, userId)
 
     sql1 = f'INSERT INTO project2b2.board(title,content,created_at,category_id,user_id) VALUES (%s, %s, NOW(), %s, %s)'
     # sql2 = f'INSERT INTO project2b2.board(data) VALUES(LOAD_FILE("{postFile}"))'
@@ -358,7 +383,7 @@ def get_user_post():
     sql = '''SELECT  `title`, `content`, `created_at` FROM board WHERE user_id = %s;'''
     curs.execute(sql, (userId))
     rows_user = curs.fetchall()
-    print(rows_user)
+    # #print(rows_user)
 
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
     return json_str, 200
@@ -383,7 +408,7 @@ def edit_get_user():
 
     curs.execute(sql, (userId))
     rows_user = curs.fetchone()
-    # print(rows_user)
+    # #print(rows_user)
 
     return jsonify({'msg': rows_user})
 
@@ -468,6 +493,7 @@ def edit_user_post():
     eEmail_receive = request.form['eEmail_give']
     eDesc_receive = request.form['eDesc_give']
     ckpw_receive = request.form['ckpw_give']
+    byte_input = ckpw_receive.encode('UTF-8')
     userId = session['id']
 
     sql = f'SELECT `password` FROM user WHERE id = "{userId}";'
@@ -475,18 +501,20 @@ def edit_user_post():
     curs.execute(sql)
     pw = curs.fetchone()
     pw = list(pw)
-    pw = pw[0]
+
+    origin_pw = bytes.fromhex(pw[0])
+    pw_check = bcrypt.checkpw(byte_input, origin_pw)
 
     db.close()
 
     if '@' not in eEmail_receive:
         return jsonify({'msg':'이메일 형식이 아닙니다.'})
-    elif (ckpw_receive != pw):
+    elif (not pw_check):
         return jsonify({'msg':'비밀번호가 틀려 정보를 수정하지 못했습니다.'})
     else:
         db = pymysql.connect(
             user='project2b2',
-            password='project2b2',
+            password='project2b2', 
             host='182.212.65.173',
             port=3306,
             database='project2b2',
