@@ -18,19 +18,19 @@ app.secret_key = '1221'
 
 @app.route('/')
 def show_main():
-    print('show_main')
+    # print('show_main')
     return render_template('index.html', component_name='main')
 
 
 @app.route('/category')
 def show_by_category():
-    print('show_category')
+    # print('show_category')
     return render_template('index.html', component_name='category')
 
 
-@app.route('/mypage')
-def show_mypage():
-    return render_template('index.html', component_name='mypage')
+# @app.route('/mypage')
+# def show_mypage():
+#     return render_template('index.html', component_name='mypage')
 
 
 # @app.route('/useredit')
@@ -40,13 +40,14 @@ def show_mypage():
 
 @app.route('/logout', methods=['GET'])
 def logout():
+    # print('logout')
     session.clear()
     return redirect('/')
 
 
 @app.route('/category-list', methods=['GET'])
 def get_category_list():
-    print('get_categories')
+    # print('get_categories')
     db = pymysql.connect(
         user='project2b2',
         password='project2b2',
@@ -64,10 +65,10 @@ def get_category_list():
         """
 
     curs.execute(sql)
-    rows_user = curs.fetchall()
-    print(rows_user)
+    rows_category = curs.fetchall()
+    # print(rows_category)
 
-    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
+    json_str = json.dumps(rows_category, indent=4, sort_keys=True, default=str)
 
     db.commit()
 
@@ -76,7 +77,7 @@ def get_category_list():
 
 @app.route('/user', methods=['GET'])
 def get_users():
-    print('get_users')
+    # print('get_users')
     db = pymysql.connect(
         user='project2b2',
         password='project2b2',
@@ -95,7 +96,7 @@ def get_users():
 
     curs.execute(sql)
     rows_user = curs.fetchall()
-    print(rows_user)
+    # print(rows_user)
 
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
 
@@ -124,7 +125,7 @@ def get_boards(category, page):
     if category == 'all':
         print('get_all_boards')
         sql = f"""
-            SELECT b.title, b.content, b.created_at, u.name, u.image, c.name_en
+            SELECT b.id, b.title, b.content, b.created_at, b.updated_at, u.name, u.image, c.name_en
             FROM board b
             INNER JOIN `user` u
             ON b.user_id = u.id
@@ -137,7 +138,7 @@ def get_boards(category, page):
     else:
         print(f'get_{category}_boards')
         sql = f"""
-            SELECT b.title, b.content, b.created_at, u.name, u.image, c.name_en
+            SELECT b.id, b.title, b.content, b.created_at, b.updated_at, u.name, u.image, c.name_en
             FROM board b
             INNER JOIN `user` u
             ON b.user_id = u.id
@@ -151,13 +152,13 @@ def get_boards(category, page):
 
     curs.execute(sql)
     rows_board = curs.fetchall()
-    print(rows_board)
+    # print(rows_board)
 
     json_str = json.dumps(rows_board, indent=4, sort_keys=True, default=str)
 
     curs.execute('SELECT COUNT(*) FROM board')
     total_num = curs.fetchall()
-    print(json.dumps(total_num))
+    # print(json.dumps(total_num))
 
     db.commit()
 
@@ -169,12 +170,15 @@ def get_boards(category, page):
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+
 # 글작성페이지로 이동
 
 
 @app.route('/post')
 def post():
     return render_template('post.html')
+
 
 # 회원가입
 
@@ -297,6 +301,7 @@ def user_login():
             session['description'] = result[5]
             return jsonify({'msg': '로그인 성공'})
 
+
 # 게시글 등록하기
 
 
@@ -331,6 +336,7 @@ def post_board():
 
     return redirect('/')
 
+
 # 게시판글쓰기 이미지경로
 
 
@@ -340,6 +346,7 @@ def post_image():
     f.save('static/image/post/' + f.filename)
     url = "static/image/post/" + f.filename
     return jsonify({'url': url})
+
 
 # 아이디찾기-----------------------------------------------------
 
@@ -371,6 +378,8 @@ def findId():
         return jsonify({'msg': '회원이 아닙니다.'})
 
     return jsonify({'msg': result[0]})
+
+
 # 회원탈퇴-----------------------------------------------------
 
 
@@ -491,6 +500,7 @@ def edit_get_user():
     # #print(rows_user)
 
     return jsonify({'msg': rows_user})
+
 
 # 마이페이지 이미지 등록
 
@@ -628,7 +638,6 @@ def boardout(board_id):
 
 @app.route('/board/<int:board_id>/data')
 def getBoard(board_id):
-
     db = pymysql.connect(host='182.212.65.173', user='project2b2',
                          db='project2b2', password='project2b2', charset='utf8')
     curs = db.cursor()
@@ -658,7 +667,6 @@ def getBoard(board_id):
 
 @app.route('/board/delete', methods=['DELETE'])
 def del_board():
-
     db = pymysql.connect(host='182.212.65.173', user='project2b2',
                          db='project2b2', password='project2b2', charset='utf8')
     curs = db.cursor()
