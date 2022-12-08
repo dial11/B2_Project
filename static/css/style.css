@@ -83,3 +83,10 @@ nav a {
     bottom: 0;
     background-image: linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 60%, rgb(255, 255, 255) 100%);
 }
+
+.short-description {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
