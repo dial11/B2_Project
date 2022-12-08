@@ -47,11 +47,6 @@ def show_by_category():
     return render_template('index.html', component_name='category')
 
 
-@app.route('/mypage')
-def show_mypage():
-    return render_template('index.html', component_name='mypage')
-
-
 @app.route('/logout', methods=['GET'])
 def logout():
     session.clear()
@@ -335,6 +330,15 @@ def post_image():
     return jsonify({'url': url})
 
 ###################################################################################################
+@app.route('/useredit')
+def useredit():
+    return render_template('useredit.html')
+
+@app.route('/mypage')
+def mypage():
+    return render_template('mypage.html')
+
+
 
 # 마이페이지에서 로그인한 유저 게시글 불러오기
 @app.route('/user/post', methods=['GET'])
@@ -359,13 +363,6 @@ def get_user_post():
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
     return json_str, 200
 
-@app.route('/useredit')
-def useredit():
-    return render_template('useredit.html')
-
-@app.route('/mypage')
-def mypage():
-    return render_template('mypage.html')
 
 # 마이페이지 수정(유저 정보 불러오기)
 @app.route('/user/edit', methods=['GET'])
@@ -390,7 +387,7 @@ def edit_get_user():
 
     return jsonify({'msg': rows_user})
 
-# 마이페이지 이미지
+# 마이페이지 이미지 등록
 @app.route('/user/edit', methods=['POST'])
 def user_img_post():
     db = pymysql.connect(
@@ -422,10 +419,37 @@ def user_img_post():
         sql = f'UPDATE `project2b2`.`user` SET image="{filename}" WHERE id="{userId}";'
 
         curs.execute(sql)
+        session['image'] = filename
     db.commit()
     db.close()
 
     return jsonify({'msg':'업로드 되었습니다.'})
+
+
+# 마이페이지 이미지 삭제
+@app.route('/user/edit', methods=['DELETE'])
+def user_img_del():
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+    curs = db.cursor()
+
+    userId = session['id']
+
+    sql = f'UPDATE `project2b2`.`user` SET image="baseprofile.png" WHERE id="{userId}";'
+
+    curs.execute(sql)
+    session['image'] = "baseprofile.png"
+    db.commit()
+    db.close()
+
+    return jsonify({'msg':'프로필 이미지가 삭제되었습니다.'})
+
 
 # 마이페이지 수정(유저 정보 수정하기)
 @app.route('/user/edit', methods=['PATCH'])
@@ -471,6 +495,11 @@ def edit_user_post():
         curs = db.cursor()
 
         sql = f'UPDATE `project2b2`.`user` SET name="{eName_receive}",email="{eEmail_receive}",description="{eDesc_receive}" WHERE id="{userId}";'
+
+
+        session['name'] = eName_receive
+        session['email'] = eEmail_receive
+        session['description'] = eDesc_receive
 
         curs.execute(sql)
         db.commit()

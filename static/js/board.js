@@ -30,8 +30,13 @@ function showBoardone(board_id) {
                     let temp_html = `
                                     <div class = "card-box">
                                         <div class = "car">
-                                             <span>${user_name}${category_name}</span> 
-                                             <span style="text-align: right; font-size: 12px">(${updated_at})수정</span>
+                                            <div style="display: flex; align-items: center;">
+                                                <img alt="이미지가 없습니다" class="img-fluid rounded-start"
+                                                    src="/static/image/default_image.png"
+                                                    style="height: 40px;">
+                                                    <span>${user_name}${category_name}</span>
+                                                    <span style="text-align: right; font-size: 12px">(${updated_at})수정</span>
+                                            </div>
                                         </div>
                                         <div class="card" style="margin-bottom: 10px;">
                                             <div class="card-body">
@@ -40,16 +45,16 @@ function showBoardone(board_id) {
                                                         <span>${title}</span> 
                                                         <span style="text-align: right; font-size: 12px">(${time})</span>
                                                     </div>
-                                                    <span>${content}</span>
-                                                    
+                                                    <p class="board-content">${content}</p>
                                                 </blockquote>
                                             </div>
                                         </div>
                                         <a style="text-align: right; font-size: 12px" href = "/boardedit/${board_id}">글 수정</a>
                                         <form name='removefrm'><button onclick = "delboard(${board_id})">글 삭제</button><form>
+                                        
                                     </div>
                                     `
-                    $('#board_user').prepend(temp_html)
+                    $('#board_user').append(temp_html)
                 }
             }
         }
