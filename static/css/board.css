@@ -48,3 +48,8 @@ align-items: center;
     width: 80%;
     height: auto;
 }
+
+.del {
+    background: #ffffff;
+    border: aliceblue;
+}
