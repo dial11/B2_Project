@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from werkzeug.utils import secure_filename
-from flask_bcrypt import Bcrypt
 import bcrypt
 # from sqlalchemy import create_engine, text
 import json
@@ -13,7 +12,6 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-bcrypt = Bcrypt(app)
 
 app.secret_key = '1221'
 
