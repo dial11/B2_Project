@@ -34,9 +34,15 @@ function showBoardone(board_id) {
                 let category_name = board_list[i][4]
                 let board_id = board_list[i][5]
                 let updated_at = board_list[i][6]
-                
+                let user_image = board_list[i][7]
                 {
-                    let temp_html = `
+                    let temp_html = `<div class = "car">
+                                        <div style="display: flex; align-items: center;">
+                                            <img class="img-fluid rounded-start"
+                                                src="../static/image/user/${user_image}"
+                                                style="height: 500px;">
+                                        </div>
+                                    </div>
                                         <div class="card" style="margin-bottom: 10px;">
                                             <div class="dodo">
                                             <span>${user_name}    ${category_name}</span>

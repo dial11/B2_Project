@@ -573,7 +573,7 @@ def getBoard(board_id):
     curs = db.cursor()
 
     sql_board = f"""
-        SELECT b.title, b.content, b.created_at, u.name, c.name, b.id, b.updated_at, b.data
+        SELECT b.title, b.content, b.created_at, u.name, c.name, b.id, b.updated_at, u.image
         FROM board b
         INNER JOIN `user` u
         ON b.user_id = u.id
