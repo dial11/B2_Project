@@ -68,7 +68,7 @@ function showBoardone(board_id) {
                 console.log(gUser_name, session_name)
                 if (session_name == gUser_name){
                     let temp_html = `
-                    <a type=button href = "/boardedit/{{board_id}}">글 수정</a> 
+                    <a type=button href = "/boardedit/${board_id}">글 수정</a> 
                     <button type= "button" onclick = "delboard(myboard_id)">글 삭제</button>
                     `
                     console.log(temp_html)
