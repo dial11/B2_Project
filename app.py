@@ -408,9 +408,11 @@ def get_user_post():
 
     userId = session['id']
 
-    sql = '''SELECT  `title`, `content`, `created_at` FROM board WHERE user_id = %s;'''
+    sql = '''SELECT  `title`, `content`, `created_at`, `id` FROM board WHERE user_id = %s;'''
     curs.execute(sql, (userId))
     rows_user = curs.fetchall()
+
+    print(rows_user)
 
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
     return json_str, 200
