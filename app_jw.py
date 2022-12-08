@@ -260,7 +260,6 @@ def user_login():
     userId = request.form['id']
     password = request.form['password']
     hash = bcrypt.generate_password_hash(password).decode('utf-8')
-    pw_check = bcrypt.check_password_hash(hash, password)
     # print(pw_check)
     # userName = request.form['name']
 
@@ -268,10 +267,11 @@ def user_login():
 
     curs.execute(sql)
     result = curs.fetchone()
-    print(result)
+    list_result = list(result)
+    pw_check = bcrypt.check_password_hash(hash, list_result[1])
+    # print(list_result[1])
     db.commit()  # 삽입,삭제,수정할때, 최종적으로 데이터베이스를 만져줄때만
     db.close()
-    # print(result)
 
     if result is None:
         # print('none')
