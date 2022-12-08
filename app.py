@@ -15,39 +15,24 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.secret_key = '1221'
 
-
 @app.route('/')
 def show_main():
-    # print('show_main')
     return render_template('index.html', component_name='main')
 
 
 @app.route('/category')
 def show_by_category():
-    # print('show_category')
     return render_template('index.html', component_name='category')
-
-
-# @app.route('/mypage')
-# def show_mypage():
-#     return render_template('index.html', component_name='mypage')
-
-
-# @app.route('/useredit')
-# def show_useredit():
-#     return render_template('index.html', component_name='useredit')
 
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    # print('logout')
     session.clear()
     return redirect('/')
 
 
 @app.route('/category-list', methods=['GET'])
 def get_category_list():
-    # print('get_categories')
     db = pymysql.connect(
         user='project2b2',
         password='project2b2',
@@ -56,7 +41,6 @@ def get_category_list():
         database='project2b2',
         charset='utf8'
     )
-
     curs = db.cursor()
 
     sql = """
@@ -66,7 +50,6 @@ def get_category_list():
 
     curs.execute(sql)
     rows_category = curs.fetchall()
-    # print(rows_category)
 
     json_str = json.dumps(rows_category, indent=4, sort_keys=True, default=str)
 
@@ -74,10 +57,8 @@ def get_category_list():
 
     return json_str, 200
 
-
 @app.route('/user', methods=['GET'])
 def get_users():
-    # print('get_users')
     db = pymysql.connect(
         user='project2b2',
         password='project2b2',
@@ -86,7 +67,6 @@ def get_users():
         database='project2b2',
         charset='utf8'
     )
-
     curs = db.cursor()
 
     sql = """
@@ -96,7 +76,6 @@ def get_users():
 
     curs.execute(sql)
     rows_user = curs.fetchall()
-    # print(rows_user)
 
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
 
@@ -116,14 +95,12 @@ def get_boards(category, page):
         database='project2b2',
         charset='utf8'
     )
-
     curs = db.cursor()
 
     perpage = 5
     startat = (page - 1) * perpage
 
     if category == 'all':
-        print('get_all_boards')
         sql = f"""
             SELECT b.id, b.title, b.content, b.created_at, b.updated_at, u.name, u.image, c.name_en
             FROM board b
@@ -136,7 +113,6 @@ def get_boards(category, page):
             OFFSET {startat}
             """
     else:
-        print(f'get_{category}_boards')
         sql = f"""
             SELECT b.id, b.title, b.content, b.created_at, b.updated_at, u.name, u.image, c.name_en
             FROM board b
@@ -152,13 +128,11 @@ def get_boards(category, page):
 
     curs.execute(sql)
     rows_board = curs.fetchall()
-    # print(rows_board)
 
     json_str = json.dumps(rows_board, indent=4, sort_keys=True, default=str)
 
     curs.execute('SELECT COUNT(*) FROM board')
     total_num = curs.fetchall()
-    # print(json.dumps(total_num))
 
     db.commit()
 
@@ -166,23 +140,19 @@ def get_boards(category, page):
 
 
 # ----------------정지우님꺼 합친 부분
-# 로그인/회원가입페이지로 이동----------------------------------------------------------------
+# 로그인/회원가입페이지로 이동---------------------------
 @app.route('/login')
 def login():
     return render_template('login.html')
 
 
 # 글작성페이지로 이동
-
-
 @app.route('/post')
 def post():
     return render_template('post.html')
 
 
 # 회원가입
-
-
 @app.route('/user/register', methods=['POST'])
 def save_user():
     db = pymysql.connect(
@@ -238,7 +208,6 @@ def save_user():
     hash = bcrypt.hashpw(byte_input, bcrypt.gensalt()).hex()
     userName = request.form['name']
     email = request.form['email']
-    # print(hash)
 
     sql = f'INSERT INTO `user` (id, password, name, email) VALUES("{userId}", "{hash}", "{userName}", "{email}");'
 
@@ -268,10 +237,6 @@ def user_login():
     # 입력된 비밀번호를 바이트 코드로 변환
     byte_input = password.encode('UTF-8')
 
-    # hash = bcrypt.hashpw(password.decode('utf-8'), bcrypt.gensalt())
-    # print(pw_check)
-    # userName = request.form['name']
-
     sql = f'select id,password,name,email,image,description from user where user.id = "{userId}"'
 
     curs.execute(sql)
@@ -280,19 +245,16 @@ def user_login():
     # 기존 저장된 값을 연산을 위해 hex에서 바이트로 변경
     origin_pw = bytes.fromhex(list_result[1])
     pw_check = bcrypt.checkpw(byte_input, origin_pw)
-    # pw_check = bcrypt.check_password_hash(hash, list_result[1])
-    # print(list_result[1])
+
     db.commit()  # 삽입,삭제,수정할때, 최종적으로 데이터베이스를 만져줄때만
     db.close()
 
     if result is None:
-        # print('none')
         return jsonify({'msg': '회원이 아닙니다.'})
 
     else:
         if not pw_check:
             return jsonify({'msg': '비밀번호가 일치하지 않습니다.'})
-
         else:
             session['id'] = result[0]
             session['name'] = result[2]
@@ -301,10 +263,7 @@ def user_login():
             session['description'] = result[5]
             return jsonify({'msg': '로그인 성공'})
 
-
 # 게시글 등록하기
-
-
 @app.route('/write', methods=['POST'])
 def post_board():
     db = pymysql.connect(
@@ -321,25 +280,18 @@ def post_board():
     postTitle = request.form['post-title']
     postContent = request.form['post-content']
     userId = session['id']
-    # postFile = request.form['data']
-    # userName = request.form['name']
-    # print(selectPost, postTitle, postContent, userId)
 
     sql1 = f'INSERT INTO project2b2.board(title,content,created_at,category_id,user_id) VALUES (%s, %s, NOW(), %s, %s)'
-    # sql2 = f'INSERT INTO project2b2.board(data) VALUES(LOAD_FILE("{postFile}"))'
 
     # 데이터베이스에 넣어주기 위함
     curs.execute(sql1, (postTitle, postContent, selectPost, userId))
-    # curs.execute(sql2)
+
     db.commit()  # 삽입,삭제,수정할때, 최종적으로 데이터베이스를 만져줄때만
     db.close()
 
     return redirect('/')
 
-
 # 게시판글쓰기 이미지경로
-
-
 @app.route('/post/image', methods=['POST'])
 def post_image():
     f = request.files['file']
@@ -347,10 +299,7 @@ def post_image():
     url = "static/image/post/" + f.filename
     return jsonify({'url': url})
 
-
 # 아이디찾기-----------------------------------------------------
-
-
 @app.route('/find/id', methods=['POST'])
 def findId():
     db = pymysql.connect(
@@ -364,7 +313,6 @@ def findId():
     curs = db.cursor()
 
     email = request.form['email']
-    # print(email, 2)
 
     sql_check = f'select id from `user` where email = "{email}" '
 
@@ -379,10 +327,7 @@ def findId():
 
     return jsonify({'msg': result[0]})
 
-
 # 회원탈퇴-----------------------------------------------------
-
-
 @app.route('/delete/user', methods=['POST'])
 def deleteUser():
     db = pymysql.connect(
@@ -398,14 +343,11 @@ def deleteUser():
     idf = request.form['idf']
     pwf = request.form['pwf']
     byte_input = pwf.encode('UTF-8')
-    # print(idf, pwf, 2)
 
     sql_check = f'select password from `user` where id = "{idf}" '
 
     curs.execute(sql_check)
-    print(sql_check)
     result = curs.fetchone()
-    print(result)
     if result is None:
         return jsonify({'msg': '회원이 아닙니다.'})
 
@@ -437,13 +379,10 @@ def deleteUser():
     db.close()
 
     return jsonify({'msg': '회원탈퇴가 되었습니다.'})
-
-
 # ----------------정지우님꺼 합친 부분
 
 
 # ----------------장빈님꺼 합친 부분
-
 @app.route('/useredit')
 def useredit():
     return render_template('useredit.html')
@@ -472,11 +411,9 @@ def get_user_post():
     sql = '''SELECT  `title`, `content`, `created_at` FROM board WHERE user_id = %s;'''
     curs.execute(sql, (userId))
     rows_user = curs.fetchall()
-    # #print(rows_user)
 
     json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
     return json_str, 200
-
 
 # 마이페이지 수정(유저 정보 불러오기)
 @app.route('/user/edit', methods=['GET'])
@@ -497,14 +434,11 @@ def edit_get_user():
 
     curs.execute(sql, (userId))
     rows_user = curs.fetchone()
-    # #print(rows_user)
 
     return jsonify({'msg': rows_user})
 
 
 # 마이페이지 이미지 등록
-
-
 @app.route('/user/edit', methods=['POST'])
 def user_img_post():
     db = pymysql.connect(
@@ -541,7 +475,6 @@ def user_img_post():
 
     return jsonify({'msg': '업로드 되었습니다.'})
 
-
 # 마이페이지 이미지 삭제
 @app.route('/user/edit', methods=['DELETE'])
 def user_img_del():
@@ -565,7 +498,6 @@ def user_img_del():
     db.close()
 
     return jsonify({'msg': '프로필 이미지가 삭제되었습니다.'})
-
 
 # 마이페이지 수정(유저 정보 수정하기)
 @app.route('/user/edit', methods=['PATCH'])
@@ -624,22 +556,18 @@ def edit_user_post():
         db.close()
 
         return jsonify({'msg': '정보가 수정되었습니다.'})
-
-
 # ----------------장빈님꺼 합친 부분
 
-# ----------------변준혁님꺼 합친 부분
 
+# ----------------변준혁님꺼 합친 부분
 @app.route('/board/<int:board_id>')
 def boardout(board_id):
-    print(board_id)
     return render_template('board.html', board_id=board_id)
-
 
 @app.route('/board/<int:board_id>/data')
 def getBoard(board_id):
     db = pymysql.connect(host='182.212.65.173', user='project2b2',
-                         db='project2b2', password='project2b2', charset='utf8')
+                        db='project2b2', password='project2b2', charset='utf8')
     curs = db.cursor()
 
     sql_board = f"""
@@ -656,7 +584,6 @@ def getBoard(board_id):
     curs.execute(sql_board)
     rows_board = list(curs.fetchall())
     rows_board.append(session["name"])
-    print(rows_board)
 
     json_str = json.dumps(rows_board, indent=4, sort_keys=True, default=str, )
 
@@ -668,7 +595,7 @@ def getBoard(board_id):
 @app.route('/board/delete', methods=['DELETE'])
 def del_board():
     db = pymysql.connect(host='182.212.65.173', user='project2b2',
-                         db='project2b2', password='project2b2', charset='utf8')
+                        db='project2b2', password='project2b2', charset='utf8')
     curs = db.cursor()
     board_id = request.form['board_id_give']
     sql_board = f"""
@@ -684,23 +611,20 @@ def del_board():
 
     return jsonify({'result': 'success', 'msg': '삭제 완료!'})
 
-
 @app.route('/boardedit/<int:board_id>')
 def editBoards(board_id):
-    print(board_id)
     return render_template('boardedit.html', board_id=board_id)
-
 
 @app.route('/boardedit/<int:board_id>/re', methods=["GET"])
 def editBoard(board_id):
     db = pymysql.connect(host='182.212.65.173', user='project2b2',
-                         db='project2b2', password='project2b2', charset='utf8')
+                        db='project2b2', password='project2b2', charset='utf8')
     curs = db.cursor()
 
     sql_board = f"""
         SELECT b.title, b.content, b.id
         FROM board b
-          
+        
         WHERE b.id = '{board_id}'
         """
 
@@ -717,7 +641,7 @@ def editBoard(board_id):
 @app.route('/boardedit/<int:board_id>/post', methods=['PATCH'])
 def postBoard(board_id):
     db = pymysql.connect(host='182.212.65.173', user='project2b2',
-                         db='project2b2', password='project2b2', charset='utf8')
+                        db='project2b2', password='project2b2', charset='utf8')
     curs = db.cursor()
 
     selectPost = request.form['category_id']
@@ -727,7 +651,7 @@ def postBoard(board_id):
 
     sql1 = f"""UPDATE board b
             SET title = %s , content = %s , category_id = %s , updated_at = NOW() 
-             
+            
             WHERE b.id = '{board_id}' """
 
     curs.execute(sql1, (postTitle, postContent, selectPost))
@@ -736,10 +660,7 @@ def postBoard(board_id):
     db.close()
 
     return jsonify({'result': 'success', 'msg': '수정 완료!'})
-
-
 # ----------------변준혁님꺼 합친 부분
 
-
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
