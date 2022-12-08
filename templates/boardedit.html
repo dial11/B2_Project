@@ -46,7 +46,7 @@
     <title>개발 is in</title>
     <link rel="icon" href="../static/img/icon.png" />
     <script>
-        let myboard_id = '{{board_id}}' ;
+      let myboard_id = '{{board_id}}' ;
     </script>
   </head>
 
@@ -60,10 +60,11 @@
         <!-- 프로필사진도 db에 존재하면 변경, 로그인을 했을 경우 작성자의 닉네임 가져오기 -->
         <img
           class="profile-image"
-          src="../static/image/baseprofile.png"
+          src="../static/image/user/{{session['image']}}"
           alt="타이틀로고"
         />
-        
+        <p>작성자닉네임 : {{session['name']}}</p>
+        <p>작성자이메일 : {{session['email']}}</p>
         <p id="clock" style="color: black">clock</p>
       </div>
       <div class="post-contents">

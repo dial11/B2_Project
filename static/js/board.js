@@ -1,4 +1,5 @@
 // let myboard_id = '{{board_id}}' ;
+let gUser_name ="";
 
 $(function() {
     showBoardone(myboard_id);
@@ -18,27 +19,24 @@ function showBoardone(board_id) {
         success: function (response) {
             console.log('success_showBoardone')
             let board_list = JSON.parse(response)
-            for (let i = 0; i < board_list.length; i++) {
+            let mysession_name= "";
+            console.log(board_list)
+            gUser_name = board_list[0][3]
+            for (let i = 0; i < 1; i++) {
                 let title = board_list[i][0]
                 let content = board_list[i][1]
                 let time = board_list[i][2]
                 let user_name = board_list[i][3]
+            
                 let category_name = board_list[i][4]
                 let board_id = board_list[i][5]
                 let updated_at = board_list[i][6]
+                mysession_name = board_list[1][0]
                 {
                     let temp_html = `
-                                    <div class = "card-box">
-                                        <div class = "car">
-                                            <div style="display: flex; align-items: center;">
-                                                <img alt="이미지가 없습니다" class="img-fluid rounded-start"
-                                                    src="/static/image/default_image.png"
-                                                    style="height: 40px;">
-                                                    <span>${user_name}${category_name}</span>
-                                                    <span style="text-align: right; font-size: 12px">(${updated_at})수정</span>
-                                            </div>
-                                        </div>
                                         <div class="card" style="margin-bottom: 10px;">
+                                            <span>${user_name}${category_name}</span>
+                                            <span style="text-align: right; font-size: 12px">(${updated_at})수정</span>
                                             <div class="card-body">
                                                 <blockquote class="blockquote mb-0" style="height: 120px;">
                                                     <div style="margin-bottom: 10px;">
@@ -49,13 +47,23 @@ function showBoardone(board_id) {
                                                 </blockquote>
                                             </div>
                                         </div>
-                                        <a style="text-align: right; font-size: 12px" href = "/boardedit/${board_id}">글 수정</a>
-                                        <form name='removefrm'><button onclick = "delboard(${board_id})">글 삭제</button><form>
-                                        
-                                    </div>
                                     `
-                    $('#board_user').append(temp_html)
+                    $('#board_user').prepend(temp_html)
                 }
+                
+            }
+            {
+                let session_name = mysession_name;
+                console.log(gUser_name, session_name)
+                if (session_name == gUser_name){
+                    let temp_html = `
+                    <a type=button href = "/boardedit/{{board_id}}">글 수정</a> 
+                    <button type= "button" onclick = "delboard(myboard_id)">글 삭제</button>
+                    `
+                    console.log(temp_html)
+                    $('#showB').append(temp_html)
+                }
+                    
             }
         }
     });
@@ -64,19 +72,20 @@ function showBoardone(board_id) {
 
 
 function delboard(board_id) {
-    if (confirm("정말 삭제하시겠습니까??") == true){    
-        document.removefrm.submit();
-    }else{   
-        return false;
-    }
-   
+    
+    // if (confirm("정말 삭제하시겠습니까??") == true){    
+    //     document.removefrm.submit();
+    // }else{   
+    //     return false;
+    // }
+    
     $.ajax({
         type: "DELETE",
         url: "/board/delete",
-        data: { board_id_give: board_id },
-        
+        data: {board_id_give: board_id},
+        datatype:"JSON",
         success: function (response) {
-            console.log();
+            console.log(response);
             alert(response['msg']);
             window.location.href = "/";
             
