@@ -1,0 +1,83 @@
+.my-profile-title {
+  margin-left: 40px;
+  padding-top: 1rem;
+  padding-bottom: 1.2rem;
+  font-size: 2em;
+  font-weight: bold;
+  padding-bottom: 1rem;
+}
+
+.my-profile-board {
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  font-weight: bold;
+  font-size: 1.8em;
+}
+
+.my-profile-board-title {
+  padding-top: 1rem;
+  padding-bottom: 1.2rem;
+  font-weight: bold;
+  font-size: 1.8em;
+}
+
+.my-profile-board-content {
+  font-size: 1.4em;
+}
+
+.my-profile-board-datatime {
+  padding-top: 1rem;
+  padding-left: 1rem;
+}
+
+.my-profile-button {
+  padding-right: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.my-profile-imgsub {
+  display: flex;
+  flex-direction: row;
+}
+
+.my-profile {
+  min-width: 600px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px 0 rgb(0 0 0 / 15%);
+}
+
+.my-profile-sub {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+}
+
+.my-profile-img {
+  display: flex;
+  padding-top: 30px;
+  padding-left: 30px;
+}
+
+.my-profile-board-box {
+  padding-bottom: 1.2rem;
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+
+.my-profile-board-box, .my-profile-board-tc {
+  /* min-width: 600px; */
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px 0 rgb(0 0 0 / 15%);
+}
+
+/* 프로필 사진 사이즈 고정 */
+.imgsize {
+  height: 300px;
+  width: 300px;
+}

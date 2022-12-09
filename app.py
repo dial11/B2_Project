@@ -104,7 +104,7 @@ def get_boards(category, page):
 
     if category == 'all':
         sql = f"""
-            SELECT b.id, b.title, b.content, b.created_at, b.updated_at, u.name, u.image, c.name_en
+            SELECT b.id, b.title, b.content, b.created_at, b.updated_at, u.name, u.image, c.name_en, u.id
             FROM board b
             INNER JOIN `user` u
             ON b.user_id = u.id
@@ -116,7 +116,7 @@ def get_boards(category, page):
             """
     else:
         sql = f"""
-            SELECT b.id, b.title, b.content, b.created_at, b.updated_at, u.name, u.image, c.name_en
+            SELECT b.id, b.title, b.content, b.created_at, b.updated_at, u.name, u.image, c.name_en, u.id
             FROM board b
             INNER JOIN `user` u
             ON b.user_id = u.id
@@ -686,6 +686,39 @@ def postBoard(board_id):
 
 
 # ----------------변준혁님꺼 합친 부분
+
+@app.route('/userpage')
+def userpage():
+    return render_template('userpage.html')
+
+@app.route('/userpage/<string:id>')
+def showUserpage(id):
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+    curs = db.cursor()
+
+    userId = id
+
+    sql = '''
+            SELECT u.name, u.email, u.description, u.image
+            FROM user u
+            WHERE id = %s;
+        '''
+
+    curs.execute(sql, (userId))
+    rows_user = curs.fetchall()
+
+    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
+
+    db.commit()
+
+    return json_str, 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -26,12 +26,13 @@ function showRandomUser() {
       let rand_num_list = pickThreeNum(user_list.length)
       for (let i = 0; i < 3; i++) {
         let rand_num = rand_num_list[i];
+        let id = user_list[rand_num][3]
         let name = user_list[rand_num][3]
         let image = user_list[rand_num][4]
         let description = user_list[rand_num][5]
         let temp_html = `
                                 <div class="card mb-3">
-                                    <a href="">
+                                    <a href="/userpage?=${id}">
                                     <div class="row g-0">
                                         <div class="col-md-3">
                                             <img alt="이미지가 없습니다" class="img-fluid rounded-start" style="height: 70px;"
@@ -101,12 +102,13 @@ function showBoard(category, page, have_to_reset) {
         let time_updated = board_list[i][4]
         let user_name = board_list[i][5]
         let user_image = board_list[i][6]
+        let user_id = board_list[i][8]
         let temp_html = ``
         if (time_updated === null) {
           temp_html = `
                                 <div>
                                     <div style="display: flex; align-items: center;">
-                                        <div style="display: flex; align-items: center; cursor: pointer;"  onclick="location.href=''">
+                                        <div style="display: flex; align-items: center; cursor: pointer;" onclick="location.href='/userpage?=${user_id}'">
                                             <img alt="이미지가 없습니다" class="img-fluid rounded-start"
                                                  src="../static/image/user/${user_image}"
                                                  style="height: 40px; margin-right: 10px;">
@@ -130,7 +132,7 @@ function showBoard(category, page, have_to_reset) {
           temp_html = `
                                 <div>
                                     <div style="display: flex; align-items: center;">
-                                        <div style="display: flex; align-items: center; cursor: pointer;"  onclick="location.href=''">
+                                        <div style="display: flex; align-items: center; cursor: pointer;"  onclick="location.href='/userpage?=${user_id}'">
                                             <img alt="이미지가 없습니다" class="img-fluid rounded-start"
                                                  src="../static/image/user/${user_image}"
                                                  style="height: 40px; margin-right: 10px;">
