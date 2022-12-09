@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8">
 
+  <meta property="og:url" content="http://54.180.106.216:5000">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="개발 is in"/>
+  <meta property="og:description" content="개발자들만의 꿀팁을 나눠요"/>
+  <meta property="og:image" content="{{ url_for('static', filename='image/개발isinforog.png') }}"/>
+
   <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -24,15 +30,15 @@
     <div class="col-2"> <!-- [뉴스피드 분류], [나의 프로필] -->
       {% include "components/category_list.html" %}
       {% if session['id'] and component_name != 'mypage' and component_name != 'useredit' %}
-      {% include "components/my_profile.html" %}
+        {% include "components/my_profile.html" %}
       {% endif %}
     </div>
     <div class="col-10"> <!-- [랜덤 프로필 & 뉴스피드], [마이 페이지], [프로필 수정 페이지] -->
       {% include "components/random_profile.html" %}
       {% if component_name == 'category' %}
-      {% include "components/main_category.html" %}
+        {% include "components/main_category.html" %}
       {% else %}
-      {% include "components/main.html" %}
+        {% include "components/main.html" %}
       {% endif %}
       <div class="d-flex justify-content-center" style="height: 32px; margin: 50px 0;"> <!-- 로딩 효과용 box -->
         <div class="spinner-border" id="loading-icon" role="status"></div>
