@@ -720,5 +720,34 @@ def showUserpage(id):
 
     return json_str, 200
 
+@app.route('/userpage/post/<string:id>', methods=['GET'])
+def userpage_post(id):
+    db = pymysql.connect(
+        user='project2b2',
+        password='project2b2',
+        host='182.212.65.173',
+        port=3306,
+        database='project2b2',
+        charset='utf8'
+    )
+    curs = db.cursor()
+
+    userId = id
+
+    sql = '''
+    SELECT  b.title, b.content, b.created_at, b.id
+    FROM board b
+    INNER JOIN `user` u
+    ON b.user_id = u.id
+    WHERE u.id = %s;'''
+
+    curs.execute(sql, (userId))
+    rows_user = curs.fetchall()
+
+    print(rows_user)
+
+    json_str = json.dumps(rows_user, indent=4, sort_keys=True, default=str)
+    return json_str, 200
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
