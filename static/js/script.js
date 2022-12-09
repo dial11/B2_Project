@@ -26,7 +26,7 @@ function showRandomUser() {
       let rand_num_list = pickThreeNum(user_list.length)
       for (let i = 0; i < 3; i++) {
         let rand_num = rand_num_list[i];
-        let id = user_list[rand_num][3]
+        let id = user_list[rand_num][0]
         let name = user_list[rand_num][3]
         let image = user_list[rand_num][4]
         let description = user_list[rand_num][5]
@@ -90,6 +90,7 @@ function showBoard(category, page, have_to_reset) {
     success: function (response) {
       // console.log('success_showBoard')
       let board_list = JSON.parse(response)
+      console.log(board_list)
       if (board_list.length < 4) {
         document.getElementById('loading-icon').style.display = 'none'
         document.getElementById('loading-message').style.display = 'block'
