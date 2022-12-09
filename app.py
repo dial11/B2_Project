@@ -599,8 +599,13 @@ def getBoard(board_id):
 
     curs.execute(sql_board)
     rows_board = list(curs.fetchall())
-    rows_board.append(session["name"])
 
+    try:
+        rows_board.append(session["name"])
+    except:
+
+        json_str = json.dumps(rows_board, indent=4, sort_keys=True, default=str, )
+    
     json_str = json.dumps(rows_board, indent=4, sort_keys=True, default=str, )
 
     db.commit()
