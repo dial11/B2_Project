@@ -15,7 +15,7 @@ function showBoardone(board_id) {
     $('#board-user').empty()
     $.ajax({
         type: "GET",
-        url: `/board/${board_id}/data`,
+        url: `/${board_id}/data`,
         data: {},
         success: function (response) {
             console.log('success_showBoardone')

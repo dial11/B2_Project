@@ -113,7 +113,7 @@ function showBoard(category, page, have_to_reset) {
                                             <span>${user_name}</span>
                                         </div>
                                     </div>
-                                    <div class="card" style="margin-bottom: 10px; cursor: pointer;"  onclick="location.href='/board/${id}'">
+                                    <div class="card" style="margin-bottom: 10px; cursor: pointer;"  onclick="location.href='/${id}'">
                                         <div class="card-body">
                                             <blockquote class="blockquote mb-0" style=" overflow: hidden; height: 200px;">
                                                 <div style="margin-bottom: 10px;">
@@ -137,7 +137,7 @@ function showBoard(category, page, have_to_reset) {
                                             <span>${user_name}</span>
                                         </div>
                                     </div>
-                                    <div class="card" style="margin-bottom: 10px; cursor: pointer;"  onclick="location.href='/board/${id}'">
+                                    <div class="card" style="margin-bottom: 10px; cursor: pointer;"  onclick="location.href='${id}'">
                                         <div class="card-body">
                                             <blockquote class="blockquote mb-0" style=" overflow: hidden; height: 200px;">
                                                 <div style="margin-bottom: 10px;">

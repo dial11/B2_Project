@@ -575,12 +575,12 @@ def edit_user_post():
 
 
 # ----------------변준혁님꺼 합친 부분
-@app.route('/board/<int:board_id>')
+@app.route('/<int:board_id>')
 def boardout(board_id):
     return render_template('board.html', board_id=board_id)
 
 
-@app.route('/board/<int:board_id>/data')
+@app.route('/<int:board_id>/data')
 def getBoard(board_id):
     db = pymysql.connect(host='182.212.65.173', user='project2b2',
                          db='project2b2', password='project2b2', charset='utf8')
