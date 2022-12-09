@@ -90,7 +90,6 @@ function showBoard(category, page, have_to_reset) {
     success: function (response) {
       // console.log('success_showBoard')
       let board_list = JSON.parse(response)
-      console.log(board_list)
       if (board_list.length < 4) {
         document.getElementById('loading-icon').style.display = 'none'
         document.getElementById('loading-message').style.display = 'block'
